@@ -9,8 +9,9 @@ public class CommandWrong extends Command{
     }
 
     @Override
-    String perform() {
-        return null;
+    public void perform() {
+        Console console = new Console();
+        console.writeString("Wrong command, please check your command or input 'help'");
     }
     //todo
 }

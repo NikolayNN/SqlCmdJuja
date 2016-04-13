@@ -10,7 +10,7 @@ public class CommandFactory{
         if(command.equalsIgnoreCase(Command.CONNECTION)){
             return new ComandConnection(source);
         }
-        return  null;
+        return  new CommandWrong(source);
     }
 
 }

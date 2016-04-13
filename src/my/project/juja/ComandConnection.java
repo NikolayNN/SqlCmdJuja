@@ -10,9 +10,8 @@ public class ComandConnection extends Command {
     }
 
     @Override
-    public String perform() {
+    public void perform() {
         ConnectionToDb connectionToDb = new ConnectionToDb();
         connectionToDb.getConnection(parametrs[0], parametrs[1], parametrs[2]);
-        return " ";
     }
 }

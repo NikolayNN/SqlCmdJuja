@@ -26,6 +26,6 @@ public abstract class Command{
             System.arraycopy(splitedFullString, 1, parametrs, 0, parametrs.length);
         }
     }
-    abstract String perform();
+    abstract void perform();
 }
 

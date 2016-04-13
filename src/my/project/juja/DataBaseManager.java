@@ -12,6 +12,7 @@ public class DataBaseManager {
         Console console = new Console();
         CommandFactory commandFactory = new CommandFactory();
         console.writeString("Hello");
+
         console.writeString("please, input your command or 'help'");
         Command command = commandFactory.createCommand(console.readString());
         command.perform();
