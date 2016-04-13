@@ -20,6 +20,8 @@ public class CommandTableList extends Command {
 
     @Override
     public void perform() {
+        Statement stmt = null;
+        ResultSet rs = null;
         try {
             Connection connection = DataBase.getConnection();
             Console console = new Console();
@@ -27,9 +29,8 @@ public class CommandTableList extends Command {
                 console.writeString("ERROR. Connect to data base.");
                 return;
             }
-            Statement stmt = connection.createStatement();
+            stmt = connection.createStatement();
             String query;
-            ResultSet rs;
             Set<String> tables = new HashSet<>();
             query = "SELECT table_name" +
                     "        FROM information_schema.tables" +
@@ -42,8 +43,14 @@ public class CommandTableList extends Command {
             }
             console.writeString(tables.toString());
         }catch (SQLException ex){
-           
             ex.printStackTrace();
+        }finally {
+            try {
+                stmt.close();
+                rs.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
     }
 }
