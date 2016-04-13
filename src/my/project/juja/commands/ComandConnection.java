@@ -17,7 +17,7 @@ public class ComandConnection extends Command {
     public void perform() {
         Console console = new Console();
         try {
-            DataBase.connectToDataBase(parametrs[0], parametrs[1], parametrs[2]);
+            DataBase.getConnection(parametrs[0], parametrs[1], parametrs[2]);
         } catch (SQLException e) {
             console.writeString("Please, check data base name, login, password");
         }

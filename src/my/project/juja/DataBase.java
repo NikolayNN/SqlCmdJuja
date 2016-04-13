@@ -11,7 +11,7 @@ public class DataBase {
 
     private static Connection connection;
 
-    public static void connectToDataBase(String dbName, String login, String password) throws SQLException {
+    public static void getConnection(String dbName, String login, String password) throws SQLException {
         if (connection != null) {
             System.out.println("You made it, take control your database now!");
         }
@@ -36,7 +36,7 @@ public class DataBase {
 
 }
 
-    public static Connection connectToDataBase() {
+    public static Connection getConnection() {
         return connection;
     }
 

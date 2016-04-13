@@ -1,9 +1,6 @@
 package my.project.juja;
 
-import my.project.juja.commands.ComandConnection;
-import my.project.juja.commands.Command;
-import my.project.juja.commands.CommandExit;
-import my.project.juja.commands.CommandWrong;
+import my.project.juja.commands.*;
 
 /**
  * Created by Nikol on 4/13/2016.
@@ -17,6 +14,9 @@ public class CommandFactory{
         }
         if(command.equalsIgnoreCase(Command.EXIT)){
             return new CommandExit(source);
+        }
+        if (command.equalsIgnoreCase(Command.TABLE_LIST)){
+            return new CommandTableList(source);
         }
         return  new CommandWrong(source);
     }

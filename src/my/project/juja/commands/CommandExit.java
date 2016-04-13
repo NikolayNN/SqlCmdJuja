@@ -15,7 +15,7 @@ public class CommandExit extends Command{
     @Override
     public void perform() {
         Console console = new Console();
-        if(DataBase.connectToDataBase() == null){
+        if(DataBase.getConnection() == null){
             console.writeString("Goodbye");
             return;
         }
