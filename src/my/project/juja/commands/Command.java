@@ -1,4 +1,4 @@
-package my.project.juja;
+package my.project.juja.commands;
 
 import java.util.Arrays;
 import java.util.Set;
@@ -9,7 +9,7 @@ import java.util.Set;
 public abstract class Command{
     public static final String HELP = "help";
     public static final String EXIT = "exit";
-    public static final String CONNECTION = "connection";
+    public static final String CONNECTION = "connect";
     public static final String COMMAND_SEPARATOR = " ";
     protected String fullString;
     protected String command;
@@ -26,6 +26,6 @@ public abstract class Command{
             System.arraycopy(splitedFullString, 1, parametrs, 0, parametrs.length);
         }
     }
-    abstract void perform();
+    public abstract void perform();
 }
 
