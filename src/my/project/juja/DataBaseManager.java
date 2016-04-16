@@ -9,10 +9,10 @@ public class DataBaseManager {
     public static void main(String[] args) {
         Console console = new Console();
         CommandFactory commandFactory = new CommandFactory();
-        console.writeString("Hello");
+        Console.writeStringln("Hello");
         String source = "";
         while (!source.equalsIgnoreCase(Command.EXIT)){
-        console.writeString("please, input your command or 'help'");
+        Console.writeStringln("please, input your command or 'help'");
             source = console.readString();
             Command command = commandFactory.createCommand(source);
             command.perform();

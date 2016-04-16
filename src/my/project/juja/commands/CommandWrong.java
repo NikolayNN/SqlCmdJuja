@@ -12,8 +12,7 @@ public class CommandWrong extends Command {
 
     @Override
     public void perform() {
-        Console console = new Console();
-        console.writeString("this command doesn't exist, please check your command or input 'help'");
+        Console.writeStringln("this command doesn't exist, please check your command or input 'help'");
     }
 
 }

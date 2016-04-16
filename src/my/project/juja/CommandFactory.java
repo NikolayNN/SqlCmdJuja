@@ -18,6 +18,9 @@ public class CommandFactory{
         if (command.equalsIgnoreCase(Command.TABLE_LIST)){
             return new CommandTableList(source);
         }
+        if (command.equalsIgnoreCase(Command.TABLE_DATA)){
+            return new CommandTableData(source);
+        }
         return  new CommandWrong(source);
     }
 

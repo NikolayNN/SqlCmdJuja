@@ -16,11 +16,11 @@ public class CommandExit extends Command{
     public void perform() {
         Console console = new Console();
         if(DataBase.getConnection() == null){
-            console.writeString("Goodbye");
+            Console.writeStringln("Goodbye");
             return;
         }
         DataBase.closeConnection();
-        console.writeString("Connection to data base was closed");
-        console.writeString("Goodbye");
+        Console.writeStringln("Connection to data base was closed");
+        Console.writeStringln("Goodbye");
     }
 }

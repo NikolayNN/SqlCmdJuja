@@ -11,12 +11,16 @@ public class Console {
         return sc.nextLine();
     }
 
-    public void writeString(String message){
+    public static void writeStringln(String message){
         System.out.println(message);
     }
 
-    public static void main(String[] args) {
-        Console consoleReader = new Console();
-        System.out.println(consoleReader.readString());
+    public static void writeStringln(){
+        System.out.println();
     }
+
+    public static void writeString(String message){
+        System.out.print(message);
+    }
+
 }

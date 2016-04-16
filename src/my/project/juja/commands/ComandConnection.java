@@ -16,10 +16,13 @@ public class ComandConnection extends Command {
     @Override
     public void perform() {
         Console console = new Console();
-        try {
-            DataBase.getConnection(parametrs[0], parametrs[1], parametrs[2]);
-        } catch (SQLException e) {
-            console.writeString("Please, check data base name, login, password");
+
+        if((parametrs.length < 3) || (parametrs.length >= 4)){
+            Console.writeStringln("check your command 'connect dbName login password'");
+            return;
         }
+
+            DataBase.getConnection(parametrs[0], parametrs[1], parametrs[2]);
+
     }
 }

@@ -20,37 +20,8 @@ public class CommandTableList extends Command {
 
     @Override
     public void perform() {
-        Statement stmt = null;
-        ResultSet rs = null;
-        try {
-            Connection connection = DataBase.getConnection();
-            Console console = new Console();
-            if(connection == null){
-                console.writeString("ERROR. Connect to data base.");
-                return;
-            }
-            stmt = connection.createStatement();
-            String query;
-            Set<String> tables = new HashSet<>();
-            query = "SELECT table_name" +
-                    "        FROM information_schema.tables" +
-                    "        WHERE table_schema='public'" +
-                    "        AND table_type='BASE TABLE';";
-            rs = stmt.executeQuery(query);
-            while (rs.next()) {
-                String name = rs.getString("table_name");
-                tables.add(name);
-            }
-            console.writeString(tables.toString());
-        }catch (SQLException ex){
-            ex.printStackTrace();
-        }finally {
-            try {
-                stmt.close();
-                rs.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
+        String tableList = DataBase.getTableList();
+        Console.writeStringln(tableList);
     }
+
 }
