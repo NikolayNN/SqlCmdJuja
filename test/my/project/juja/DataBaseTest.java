@@ -4,6 +4,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.sql.Connection;
+import java.util.ArrayList;
 import java.util.Arrays;
 
 import static org.junit.Assert.assertEquals;
@@ -22,9 +23,19 @@ public class DataBaseTest {
 
         DataBase.clearTable("users");
 
-        DataBase.addRecord("users", "alex", "FadH74Gne");
+        DataBase.addRecord("users", "alex", "FadH74Gne", "123");
 
-//        assertEquals("[name, password, id]", Arrays.toString(user.getNames()));
+        ArrayList<String> recordList =DataBase.getTableData("users");
+        String actual = recordList.get(0);
+
+        assertEquals("alex|FadH74Gne|123|", actual);
 
     }
+    @Test
+    public void getColumnNameTest(){
+        String actual = DataBase.getColumnName("users");
+        assertEquals("name|password|Id|", actual);
+    }
+
+
 }
