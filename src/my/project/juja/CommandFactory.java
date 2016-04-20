@@ -21,6 +21,9 @@ public class CommandFactory{
         if (command.equalsIgnoreCase(Command.TABLE_DATA)){
             return new CommandTableData(source);
         }
+        if (command.equalsIgnoreCase(Command.ADD_RECORD)){
+            return new CommandAddRecord(source);
+        }
         return  new CommandWrong(source);
     }
 

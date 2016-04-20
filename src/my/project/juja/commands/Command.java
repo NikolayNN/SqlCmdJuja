@@ -12,6 +12,7 @@ public abstract class Command{
     public static final String CONNECTION = "connect";
     public static final String TABLE_LIST = "tablelist";
     public static final String TABLE_DATA = "tabledata";
+    public static final String ADD_RECORD = "addrecord";
     public static final String COMMAND_SEPARATOR = " ";
     protected String fullString;
     protected String command;
