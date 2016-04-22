@@ -6,7 +6,7 @@ import java.util.Scanner;
  * Created by Nikol on 4/12/2016.
  */
 public class Console {
-    public String readString() {
+    public static String readString() {
         Scanner sc = new Scanner(System.in);
         return sc.nextLine();
     }

@@ -133,7 +133,7 @@ public class DataBase {
                 result += rsmd.getColumnName(i) + "|";
             }
         }catch (SQLException ex){
-            Console.writeStringln("ERROR. Table " + tableName + " is not exist");
+            Console.writeStringln("ERROR. TempTable " + tableName + " is not exist");
         }
         return result;
     }
@@ -153,7 +153,7 @@ public class DataBase {
                 result.add(record);
             }
         }catch (SQLException ex){
-            Console.writeStringln("ERROR. Table " + tableName + " is not exist");
+            Console.writeStringln("ERROR. TempTable " + tableName + " is not exist");
         }
         return result;
     }
