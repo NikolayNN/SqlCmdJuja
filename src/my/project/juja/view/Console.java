@@ -1,25 +1,26 @@
-package my.project.juja;
+package my.project.juja.view;
 
 import java.util.Scanner;
 
 /**
  * Created by Nikol on 4/12/2016.
  */
-public class Console {
-    public static String readString() {
+public class Console implements View {
+    @Override
+    public String read() {
         Scanner sc = new Scanner(System.in);
         return sc.nextLine();
     }
-
-    public static void writeStringln(String message){
+    @Override
+    public void writeln(String message){
         System.out.println(message);
     }
-
-    public static void writeStringln(){
+    @Override
+    public void writeln(){
         System.out.println();
     }
-
-    public static void writeString(String message){
+    @Override
+    public void write(String message){
         System.out.print(message);
     }
 

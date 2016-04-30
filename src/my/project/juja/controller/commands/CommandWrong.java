@@ -1,6 +1,6 @@
-package my.project.juja.commands;
+package my.project.juja.controller.commands;
 
-import my.project.juja.Console;
+import my.project.juja.view.Console;
 
 /**
  * Created by Nikol on 4/13/2016.
@@ -12,7 +12,7 @@ public class CommandWrong extends Command {
 
     @Override
     public void perform() {
-        Console.writeStringln("this command doesn't exist, please check your command or input 'help'");
+        view.writeln("this command doesn't exist, please check your command");
     }
 
 }

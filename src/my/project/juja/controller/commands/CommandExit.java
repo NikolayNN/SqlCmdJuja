@@ -1,7 +1,8 @@
-package my.project.juja.commands;
+package my.project.juja.controller.commands;
 
-import my.project.juja.DataBase;
-import my.project.juja.Console;
+import my.project.juja.model.DataBase;
+import my.project.juja.view.Console;
+import my.project.juja.view.View;
 
 /**
  * Created by Nikol on 4/13/2016.
@@ -14,13 +15,13 @@ public class CommandExit extends Command{
 
     @Override
     public void perform() {
-        Console console = new Console();
+
         if(DataBase.getConnection() == null){
-            Console.writeStringln("Goodbye");
+            view.writeln("Goodbye");
             return;
         }
         DataBase.closeConnection();
-        Console.writeStringln("Connection to data base was closed");
-        Console.writeStringln("Goodbye");
+        view.writeln("Connection to data base was closed");
+        view.writeln("Goodbye");
     }
 }

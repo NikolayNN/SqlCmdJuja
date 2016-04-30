@@ -1,4 +1,6 @@
-package my.project.juja;
+package my.project.juja.model;
+
+import my.project.juja.view.Console;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -10,37 +12,31 @@ import java.util.Set;
  */
 public class DataBase {
 
+    private static final String ERROR_WRONG_TABLENAME = "ERROR. check table name";
+    private static final String ERROR_WRONG_COMMAND = "ERROR. check inputed command";
     private static Connection connection;
     private static String dbName;
-
+    private static  final String ERROR_JDBCDRIVER_NOT_FOUND = "ERROR. add jdbc driver to project";
+    private static  final String ERROR_CONNECT_UNSUCCESSFUL = "ERROR. connect to database unsuccessful, check your command";
+    private static  final String ERROR_CONNECTION_NOT_EXIST = "ERROR. at first connect to database";
 
     public static void getConnection(String dbName, String login, String password) {
         DataBase.dbName = dbName;
-        if (connection != null) {
-            System.out.println("You made it, take control your database now!");
-        }
         try {
             Class.forName("org.postgresql.Driver");
         } catch (ClassNotFoundException e) {
-            System.out.println("Where is your PostgreSQL JDBC Driver? "
-                    + "Include in your library path!");
-            e.printStackTrace();
-
+          throw new RuntimeException(ERROR_JDBCDRIVER_NOT_FOUND);
         }
         try {
             connection = DriverManager.getConnection(
                     "jdbc:postgresql://localhost:5432/" + dbName, login,
                     password);
-        } catch (SQLException e) {
-            Console.writeStringln("You should connect to database");
+        } catch (SQLException ex) {
+            throw new RuntimeException(ERROR_CONNECT_UNSUCCESSFUL + " " + ex.getMessage());
         }
-
-        if (connection != null) {
-            System.out.println("You made it, take control your database now!");
-        } else {
-            System.out.println("Failed to make connection!");
+        if (connection == null) {
+           throw new RuntimeException(ERROR_CONNECT_UNSUCCESSFUL);
         }
-
 }
 
     public static Connection getConnection() {
@@ -50,28 +46,29 @@ public class DataBase {
     public static void closeConnection(){
         try {
             connection.close();
+            connection = null;
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
     public static void clearTable(String tableName){
+        if(connection == null){
+            throw new RuntimeException(ERROR_CONNECTION_NOT_EXIST);
+        }
         try (Statement stmt = connection.createStatement()){
 //            stmt = connection.createStatement();
             String sql = "DELETE FROM " + tableName;
             stmt.executeUpdate(sql);
-            Console.writeStringln("table " + tableName + " was cleared");
         }catch (SQLException ex) {
-            Console.writeStringln("check table name");
+            throw new RuntimeException(ERROR_WRONG_TABLENAME);
         }
     }
 
     public static void addRecord(String tableName, String ... values) {
         if(connection == null){
-            Console.writeStringln("ERROR. connect to data base!");
-            return;
+            throw new RuntimeException(ERROR_CONNECTION_NOT_EXIST);
         }
-
         try (Statement stmt = connection.createStatement()) {
         String valuesQuery = "";
         for (int i = 0; i < values.length; i++) {
@@ -87,15 +84,13 @@ public class DataBase {
             stmt.executeUpdate(sql);
             stmt.close();
         }catch (SQLException ex){
-            Console.writeStringln("ERROR. wrong query!");
-            ex.printStackTrace();
+            throw new RuntimeException(ERROR_WRONG_COMMAND);
         }
     }
 
     public static String getTableList (){
         if(connection == null){
-            Console.writeStringln("ERROR. Connect to data base.");
-            return "";
+            throw new RuntimeException(ERROR_CONNECTION_NOT_EXIST);
         }
         String result = "no one table exist in " + dbName;
         String query = "SELECT table_name" +
@@ -112,7 +107,7 @@ public class DataBase {
             rs.close();
             stmt.close();
         }catch (SQLException ex){
-            ex.printStackTrace();
+            throw new RuntimeException(ERROR_WRONG_COMMAND);
         }
         return result;
     }
@@ -122,8 +117,7 @@ public class DataBase {
     public static String getColumnName(String tableName){
         String result = "";
         if(connection == null){
-            Console.writeStringln("Error. Connect to database");
-            return "";
+           throw new RuntimeException(ERROR_CONNECTION_NOT_EXIST);
         }
         String query = "SELECT * FROM " + tableName;
         try(Statement stmt = connection.createStatement();
@@ -133,7 +127,7 @@ public class DataBase {
                 result += rsmd.getColumnName(i) + "|";
             }
         }catch (SQLException ex){
-            Console.writeStringln("ERROR. TempTable " + tableName + " is not exist");
+            throw new RuntimeException(ERROR_WRONG_TABLENAME);
         }
         return result;
     }
@@ -144,7 +138,6 @@ public class DataBase {
         try(Statement stmt = connection.createStatement();
             ResultSet rs = stmt.executeQuery(query)) {
             ResultSetMetaData rsmd = rs.getMetaData();
-
             while (rs.next()) {
                 String record = "";
                 for (int i = 1; i <= rsmd.getColumnCount(); i++) {
@@ -153,7 +146,7 @@ public class DataBase {
                 result.add(record);
             }
         }catch (SQLException ex){
-            Console.writeStringln("ERROR. TempTable " + tableName + " is not exist");
+            throw new RuntimeException(ERROR_WRONG_TABLENAME);
         }
         return result;
     }

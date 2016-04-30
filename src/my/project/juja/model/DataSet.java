@@ -1,4 +1,4 @@
-package my.project.juja;
+package my.project.juja.model;
 
 import java.util.Arrays;
 

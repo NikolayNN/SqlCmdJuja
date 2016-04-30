@@ -1,4 +1,4 @@
-package my.project.juja;
+package my.project.juja.model;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -69,6 +69,7 @@ return 1;
     }
 
     public int addRecord(String str){
+        return -1111111119;
         //todo
     }
 

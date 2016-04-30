@@ -1,9 +1,8 @@
-package my.project.juja.commands;
+package my.project.juja.controller.commands;
 
-import my.project.juja.Console;
-import my.project.juja.DataBase;
+import my.project.juja.view.Console;
+import my.project.juja.model.DataBase;
 
-import java.sql.*;
 import java.util.ArrayList;
 
 /**
@@ -17,20 +16,25 @@ public class CommandTableData extends Command{
 
     @Override
     public void perform() {
+        if (DataBase.getConnection() == null){
+            view.writeln("ERROR. at first connect to database");
+            return;
+        }
+
         if (parametrs.length == 0) {
-            Console.writeStringln("input table name!");
+            view.writeln("input table name!");
             return;
         }
         if (parametrs.length > 1) {
-            Console.writeStringln("input correct command 'tabledata tablename'");
+            view.writeln("input correct command: 'tabledata tablename'");
             return;
         }
         String tableName = parametrs[0];
-        Console.writeStringln(DataBase.getColumnName(tableName));
-        Console.writeStringln("---------------------------");
+        view.writeln(DataBase.getColumnName(tableName));
+        view.writeln("---------------------------");
         ArrayList<String> tableData = DataBase.getTableData(tableName);
         for (String s : tableData) {
-            Console.writeStringln(s);
+            view.writeln(s);
         }
     }
 }
