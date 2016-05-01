@@ -1,24 +1,29 @@
 package my.project.juja.model;
+import my.project.juja.controller.commands.Command;
+
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * Created by Nikol on 4/21/2016.
  */
 public class TempTable {
     private String tableName;
-
-    private ArrayList<String> columnsNameList;
-    private int[] columnsToEditIdx;
-    private boolean openToEdit;
-    private String columnsNameWithIdx;
     private int tableSize;
-    private ArrayList<String> records;
+
+    private List<String> columnsNameList;
+    private int[] columnsToEditIdx;
+    private String columnsNameWithIdx;
+    private List<String> records;
+    {
+        records = new ArrayList<>();
+    }
 
     public TempTable(String tableName) {
         this.tableName = tableName;
         String[] columns = DataBase.getColumnName(tableName).split("\\|");
-        this.columnsNameList = new ArrayList<String>(Arrays.asList(columns));
+        this.columnsNameList = new ArrayList<>(Arrays.asList(columns));
         this.tableSize = columnsNameList.size();
     }
 
@@ -37,7 +42,7 @@ public class TempTable {
     }
 
     private int[] stringToArrayInt(String s){
-        String[] temp = s.split(" ");
+        String[] temp = s.split(Command.SEPARATOR);
         int[] result = new int[temp.length];
         for (int i = 0; i < result.length; i++) {
             result[i] = Integer.parseInt(temp[i]);
@@ -50,8 +55,6 @@ public class TempTable {
         if(idx.length == 0){
             return -1;
         }
-
-        System.out.println(Arrays.toString(idx));
         for (int i = 0; i < idx.length; i++) {
             if((idx[i] > tableSize) || (idx[i]<0)){
                 return -1;
@@ -59,28 +62,39 @@ public class TempTable {
         }
 
         Arrays.sort(idx);
-        for (int i = 0; i <idx.length - 1; i++) {
+        for (int i = 0; i < idx.length - 1; i++) {
             if(idx[i] == idx[i+1]){
                 return -1;
             }
         }
         columnsToEditIdx = idx;
-return 1;
+        return 1;
     }
 
-    public int addRecord(String str){
-        return -1111111119;
-        //todo
+    public void addTableLine(String line){
+        System.out.println(line);
+        records.add(line);
     }
 
-//    public int setColumnsToEditIdx (String str){
-//        if(str.equalsIgnoreCase("all")){
-//            columnsToEditIdx = new int[tableSize];
-//            for (int i = 0; i < tableSize; i++) {
-//                columnsToEditIdx[i] = i;
-//            }
-//            return 1;
-//        }
-//        return -1;
-//    }
+    public void saveTable(){
+        String columnsToEdit = "";
+        for (int i = 0; i < columnsToEditIdx.length; i++) {
+            columnsToEdit += columnsNameList.get(columnsToEditIdx[i]) + Command.SEPARATOR;
+        }
+
+        for (int i = 0; i < records.size(); i++) {
+            DataBase.addRecord(tableName, columnsToEdit, records.get(i));
+        }
+
+    }
+
+    public void clearTable(){
+        columnsNameList = null;
+        columnsToEditIdx = null;
+        columnsNameWithIdx = null;
+        tableSize = 0;
+        records = null;
+    }
+
+
 }

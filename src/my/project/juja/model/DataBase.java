@@ -1,5 +1,6 @@
 package my.project.juja.model;
 
+import my.project.juja.controller.commands.Command;
 import my.project.juja.view.Console;
 
 import java.sql.*;
@@ -14,6 +15,7 @@ public class DataBase {
 
     private static final String ERROR_WRONG_TABLENAME = "ERROR. check table name";
     private static final String ERROR_WRONG_COMMAND = "ERROR. check inputed command";
+    private static final String ERROR_WRONG_PARAMETERS_COUNT = "ERROR. wrong paramaters count";
     private static Connection connection;
     private static String dbName;
     private static  final String ERROR_JDBCDRIVER_NOT_FOUND = "ERROR. add jdbc driver to project";
@@ -86,6 +88,45 @@ public class DataBase {
         }catch (SQLException ex){
             throw new RuntimeException(ERROR_WRONG_COMMAND);
         }
+    }
+
+    public static void addRecord(String tableName,String columnNames, String columnValues) {
+        if(connection == null){
+            throw new RuntimeException(ERROR_CONNECTION_NOT_EXIST);
+        }
+//        if(columnNames.length != columnValues.length){
+//            throw new RuntimeException(ERROR_WRONG_PARAMETERS_COUNT);
+//        }
+
+        columnNames = parcer(columnNames, "\"");
+        columnValues = parcer(columnValues, "'");
+
+        try (Statement stmt = connection.createStatement()) {
+            String sql = "INSERT INTO " + tableName + "(" + columnNames + ")" +
+                    " VALUES (" + columnValues + ")";
+            System.out.println(sql);
+            stmt.executeUpdate(sql);
+            stmt.close();
+        }catch (SQLException ex){
+            throw new RuntimeException(ERROR_WRONG_COMMAND);
+        }
+    }
+
+
+    private static String parcer(String line, String s) {
+        String[] word = line.split(Command.SEPARATOR);
+        String result = "";
+        for (int i = 0; i < word.length; i++) {
+
+            result += s + word[i] + s;
+            if (!(i == word.length-1)){
+                result += ",";
+            }else {
+                break;
+            }
+
+        }
+        return result;
     }
 
     public static String getTableList (){

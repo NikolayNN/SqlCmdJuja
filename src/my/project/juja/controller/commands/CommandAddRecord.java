@@ -1,6 +1,5 @@
 package my.project.juja.controller.commands;
 
-import my.project.juja.view.Console;
 import my.project.juja.model.TempTable;
 
 /**
@@ -19,18 +18,24 @@ public class CommandAddRecord extends Command {
         String tableName = parametrs[0];
         TempTable tempTable = new TempTable(tableName);
         view.writeln(tempTable.getColumnsNameWithIdx());
+        view.writeln("choose neccesary index column to fill");
+        String columnsToEdit = view.read();
+        tempTable.setColumnsToEditIdx(columnsToEdit);
+        view.writeln("input values for columns");
+        String command;
         while(true) {
-            view.writeln("choose neccesary index column for fill");
-            if (tempTable.setColumnsToEditIdx(view.read()) == 1){
+            command = view.read();
+            if(command.equalsIgnoreCase(COMMAND_SAVE)){
+                tempTable.saveTable();
                 break;
-            }else{
-                view.writeln("Check your input!");
             }
+            if(command.equalsIgnoreCase(COMMAND_CANCEL)){
+                tempTable.clearTable();
+                break;
+            }
+            String tableLine = command;
+            tempTable.addTableLine(tableLine);
         }
-        String command = "";
-            while(  command.equalsIgnoreCase(COMMAND_SAVE) ||
-                command.equalsIgnoreCase(COMMAND_CANCEL)){
-                    //todo
-            }
+
         }
 }
