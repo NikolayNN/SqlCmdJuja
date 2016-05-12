@@ -16,13 +16,16 @@ public class TempTable {
     private int[] columnsToEditIdx;
     private String columnsNameWithIdx;
     private List<String> records;
+    private Storeable store;
+
     {
         records = new ArrayList<>();
     }
 
-    public TempTable(String tableName) {
+    public TempTable(Storeable store, String tableName) {
         this.tableName = tableName;
-        String[] columns = DataBase.getColumnName(tableName).split("\\|");
+        this.store = store;
+        String[] columns = store.getColumnName(tableName).split("\\|");
         this.columnsNameList = new ArrayList<>(Arrays.asList(columns));
         this.tableSize = columnsNameList.size();
     }
@@ -83,7 +86,7 @@ public class TempTable {
         }
 
         for (int i = 0; i < records.size(); i++) {
-            DataBase.addRecord(tableName, columnsToEdit, records.get(i));
+            store.addRecord(tableName, columnsToEdit, records.get(i));
         }
 
     }

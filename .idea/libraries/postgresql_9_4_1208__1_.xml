@@ -2,8 +2,11 @@
   <library name="postgresql-9.4.1208 (1)">
     <CLASSES>
       <root url="jar://$PROJECT_DIR$/lib/postgresql-9.4.1208 (1).jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/mockito-all-1.9.5.jar!/" />
     </CLASSES>
     <JAVADOC />
-    <SOURCES />
+    <SOURCES>
+      <root url="jar://$PROJECT_DIR$/lib/mockito-all-1.9.5.jar!/" />
+    </SOURCES>
   </library>
 </component>

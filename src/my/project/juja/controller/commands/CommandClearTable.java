@@ -1,24 +1,28 @@
 package my.project.juja.controller.commands;
 
-import my.project.juja.model.DataBase;
+import my.project.juja.model.Storeable;
+import my.project.juja.view.View;
 
 /**
  * Created by Nikol on 4/30/2016.
  */
 public class CommandClearTable extends Command {
-
-    public CommandClearTable(String source) {
-        super(source);
+    private static final int countParameters = 1;
+    public static final String name = Command.CLEAR_TABLE;
+    public CommandClearTable(Storeable store, View view) {
+        super(store, view);
     }
 
     @Override
     public void perform() {
-        if (countParametrs != 1){
-            view.writeln("check your command 'cleartable tableName'");
-            return;
-        }
+        checkCountParameters(parametrs, countParameters);
         String tableName = parametrs[0];
-        DataBase.clearTable(tableName);
+        store.clearTable(tableName);
         view.writeln(tableName + " has been cleared" );
+    }
+
+    @Override
+    public String getName() {
+        return name;
     }
 }

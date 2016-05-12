@@ -1,33 +1,31 @@
 package my.project.juja.controller.commands;
 
+import my.project.juja.model.Storeable;
 import my.project.juja.view.Console;
-import my.project.juja.model.DataBase;
 import my.project.juja.view.View;
 
 /**
  * Created by Nikol on 4/13/2016.
  */
 public class ComandConnection extends Command {
-    private final String commandSample = "connect dbname login password";
-    private int commandSize;
-    {
-        commandSize = commandSample.split(Command.SEPARATOR).length-1;
-    }
-    public ComandConnection(String source) {
-        super(source);
+    private static final int EXPECTED_COUNT_PARAMETERS = 3;
+    public static final String name = Command.CONNECTION;
+    public ComandConnection(Storeable store, View view) {
+        super(store, view);
     }
 
     @Override
     public void perform() {
-        View view = new Console();
-        if((parametrs.length != commandSize)){
-            view.writeln("command 'connect' must have 3 parameters: dbName login password");
-            return;
-        }
+        checkCountParameters(parametrs, EXPECTED_COUNT_PARAMETERS);
         String dbName = parametrs[0];
         String login = parametrs[1];
         String password = parametrs[2];
-            DataBase.getConnection(dbName, login, password);
+        store.getConnection(dbName, login, password);
         view.writeln(MESSAGE_COMMAND_PERFORMED_SUCCESSFUL);
+    }
+
+    @Override
+    public String getName() {
+        return name;
     }
 }

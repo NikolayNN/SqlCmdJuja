@@ -3,13 +3,11 @@ package my.project.juja.integration;
 import my.project.juja.controller.Main;
 import my.project.juja.controller.commands.Command;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Test;
 
 
 import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.io.PrintStream;
 import java.io.UnsupportedEncodingException;
 
@@ -215,7 +213,7 @@ public class IntegrationTest {
         //then
         assertEquals("Hello\r\n" +
                 "please, input your command or 'help'\r\n" +
-                "command 'connect' must have 3 parameters: dbName login password\r\n" +
+                "Wrong count parameters expected 3, but found 0\r\n" +
                 "please, input your command or 'help'\r\n" +
                 "Goodbye\r\n", getData());
     }
@@ -249,7 +247,7 @@ public class IntegrationTest {
                 + DB_NAME + Command.SEPARATOR
                 + DB_LOGIN + Command.SEPARATOR
                 + DB_PASSWORD);
-        in.add(Command.CLEAR + Command.SEPARATOR + TEST_TABLE);
+        in.add(Command.CLEAR_TABLE + Command.SEPARATOR + TEST_TABLE);
         in.add(Command.EXIT);
         //when
         Main.main(new String[0]);
@@ -267,7 +265,7 @@ public class IntegrationTest {
     @Test
     public void testClearTableWithoutConnect(){
         //given
-        in.add(Command.CLEAR + Command.SEPARATOR + TEST_TABLE);
+        in.add(Command.CLEAR_TABLE + Command.SEPARATOR + TEST_TABLE);
         in.add(Command.EXIT);
         //when
         Main.main(new String[0]);
@@ -286,7 +284,7 @@ public class IntegrationTest {
                 + DB_NAME + Command.SEPARATOR
                 + DB_LOGIN + Command.SEPARATOR
                 + DB_PASSWORD);
-        in.add(Command.CLEAR + Command.SEPARATOR + "wrongTableName");
+        in.add(Command.CLEAR_TABLE + Command.SEPARATOR + "wrongTableName");
         in.add(Command.EXIT);
         //when
         Main.main(new String[0]);
@@ -308,7 +306,7 @@ public class IntegrationTest {
                 + DB_NAME + Command.SEPARATOR
                 + DB_LOGIN + Command.SEPARATOR
                 + DB_PASSWORD);
-        in.add(Command.CLEAR);
+        in.add(Command.CLEAR_TABLE);
         in.add(Command.EXIT);
         //when
         Main.main(new String[0]);
@@ -317,7 +315,7 @@ public class IntegrationTest {
                 "please, input your command or 'help'\r\n" +
                 "OK.\r\n" +
                 "please, input your command or 'help'\r\n" +
-                "check your command 'cleartable tableName'\r\n" +
+                "Wrong count parameters expected 1, but found 0\r\n" +
                 "please, input your command or 'help'\r\n" +
                 "Connection to data base was closed\r\n" +
                 "Goodbye\r\n", getData());
