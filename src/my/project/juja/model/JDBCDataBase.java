@@ -3,6 +3,7 @@ package my.project.juja.model;
         import java.sql.*;
         import java.util.ArrayList;
         import java.util.HashSet;
+        import java.util.List;
         import java.util.Set;
 
 /**
@@ -73,8 +74,8 @@ public class JDBCDataBase implements Storeable {
     @Override
     public void addRecord(String tableName, String columnNames, String columnValues) {
         checkConnection();
-        columnNames = parcer(columnNames, "\"");
-        columnValues = parcer(columnValues, "'");
+        columnNames = format(columnNames, "\"");
+        columnValues = format(columnValues, "'");
         try (Statement stmt = connection.createStatement()) {
             String sql =    "INSERT INTO " + tableName + "(" + columnNames + ")" +
                             " VALUES (" + columnValues + ")";
@@ -86,11 +87,11 @@ public class JDBCDataBase implements Storeable {
     }
 
 
-    private String parcer(String line, String s) {
+    private String format(String line, String quoteType) {
         String[] word = line.split(Command.SEPARATOR);
         String result = "";
         for (int i = 0; i < word.length; i++) {
-            result += s + word[i] + s;
+            result += quoteType + word[i] + quoteType;
             if (!(i == word.length-1)){
                 result += ",";
             }else {
@@ -101,9 +102,9 @@ public class JDBCDataBase implements Storeable {
     }
 
     @Override
-    public String getTableList(){
+    public List<String> getTableList(){
         checkConnection();
-        String result = "no one table exist in " + dbName;
+        List<String> result = new ArrayList<>();
         String query =  "SELECT table_name" +
                         " FROM information_schema.tables" +
                         " WHERE table_schema='public'" +
@@ -111,10 +112,8 @@ public class JDBCDataBase implements Storeable {
         try(Statement stmt = connection.createStatement(); ResultSet rs = stmt.executeQuery(query) )  {
             Set<String> tables = new HashSet<>();
             while (rs.next()) {
-                String name = rs.getString("table_name");
-                tables.add(name);
+                result.add(rs.getString("table_name"));
             }
-            result = tables.toString();
             rs.close();
             stmt.close();
         }catch (SQLException ex){
@@ -124,15 +123,15 @@ public class JDBCDataBase implements Storeable {
     }
 
     @Override
-    public String getColumnName(String tableName){
-        String result = "";
+    public List<String> getColumnName(String tableName){
         checkConnection();
-        String query = "SELECT * FROM " + tableName;
+        List<String> result = new ArrayList<>();
+        String query = "SELECT * FROM " + tableName + " Limit 1";
         try(Statement stmt = connection.createStatement();
             ResultSet rs = stmt.executeQuery(query)) {
             ResultSetMetaData rsmd = rs.getMetaData();
             for (int i = 1; i <= rsmd.getColumnCount(); i++) {
-                result += rsmd.getColumnName(i) + "|";
+                result.add(rsmd.getColumnName(i));
             }
         }catch (SQLException ex){
             throw new RuntimeException(ERROR_WRONG_TABLENAME);
@@ -141,9 +140,9 @@ public class JDBCDataBase implements Storeable {
     }
 
     @Override
-    public ArrayList<String> getTableData(String tableName){
+    public List<String> getTableData(String tableName){
         checkConnection();
-        ArrayList<String> result = new ArrayList<>();
+        List<String> result = new ArrayList<>();
         String query = "SELECT * FROM " + tableName;
         try(Statement stmt = connection.createStatement();
             ResultSet rs = stmt.executeQuery(query)) {

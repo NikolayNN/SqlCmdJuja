@@ -25,8 +25,7 @@ public class TempTable {
     public TempTable(Storeable store, String tableName) {
         this.tableName = tableName;
         this.store = store;
-        String[] columns = store.getColumnName(tableName).split("\\|");
-        this.columnsNameList = new ArrayList<>(Arrays.asList(columns));
+        this.columnsNameList = store.getColumnName(tableName);
         this.tableSize = columnsNameList.size();
     }
 

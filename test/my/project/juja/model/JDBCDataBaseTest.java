@@ -26,7 +26,7 @@ public class JDBCDataBaseTest {
 
         JDBCDataBase.addRecord("users","name password Id", "alex FadH74Gne 123");
 
-        ArrayList<String> recordList = JDBCDataBase.getTableData("users");
+        List<String> recordList = JDBCDataBase.getTableData("users");
         String actual = recordList.get(0);
 
         assertEquals("alex|FadH74Gne|123|", actual);
@@ -34,14 +34,16 @@ public class JDBCDataBaseTest {
     }
     @Test
     public void getColumnNameTest(){
-        String actual = JDBCDataBase.getColumnName("users");
-        assertEquals("name|password|Id|", actual);
+        List<String> actual = JDBCDataBase.getColumnName("users");
+
+        assertEquals("[name, password, Id]", actual.toString());
     }
 
     @Test
     public void getTableListTest(){
-        String actual = JDBCDataBase.getTableList();
-        assertEquals("[users2, users]", actual);
+        List<String> actual = JDBCDataBase.getTableList();
+
+        assertEquals("[users, users2]", actual.toString());
     }
 
     @Test

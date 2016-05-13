@@ -10,6 +10,8 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
 
 import java.sql.Connection;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.atLeast;
@@ -32,7 +34,10 @@ public class CommandTableListMockito {
     public void test(){
         //given
         Command command = new CommandTableList(store,view);
-        Mockito.when(store.getTableList()).thenReturn("TestTable1, TestTable2");
+        List<String> tableList = new ArrayList<>();
+        tableList.add("TestTable1");
+        tableList.add("TestTable2");
+        Mockito.when(store.getTableList()).thenReturn(tableList);
 
         //when
         command.perform();
@@ -40,6 +45,6 @@ public class CommandTableListMockito {
         //then
         ArgumentCaptor<String> captor = ArgumentCaptor.forClass(String.class);
         verify(view).writeln(captor.capture());
-        assertEquals("[TestTable1, TestTable2]", captor.getAllValues().toString());
+        assertEquals("[[TestTable1, TestTable2]]", captor.getAllValues().toString());
     }
 }

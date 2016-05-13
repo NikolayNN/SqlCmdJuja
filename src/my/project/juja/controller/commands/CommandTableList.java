@@ -3,6 +3,9 @@ package my.project.juja.controller.commands;
 import my.project.juja.model.Storeable;
 import my.project.juja.view.View;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by Nikol on 4/13/2016.
  */
@@ -15,8 +18,8 @@ public class CommandTableList extends Command {
 
     @Override
     public void perform() {
-        String tableList = store.getTableList();
-        view.writeln(tableList);
+        List<String> tableList = store.getTableList();
+        view.writeln(tableList.toString());
     }
 
     @Override

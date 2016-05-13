@@ -4,6 +4,7 @@ import my.project.juja.model.Storeable;
 import my.project.juja.view.View;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Nikol on 4/13/2016.
@@ -18,16 +19,15 @@ public class CommandTableData extends Command{
 
     @Override
     public void perform() {
-        if (store.getConnection() == null){
-            view.writeln("ERROR. at first connect to database");
-            return;
-        }
+        List<String> columnNames;
         checkCountParameters(parametrs,COUNT_PARAMETERS);
-
         String tableName = parametrs[0];
-        view.writeln(store.getColumnName(tableName));
+        columnNames = store.getColumnName(tableName);
+        for (String columnName : columnNames) {
+            view.write(columnName + "|");
+        }
         view.writeln("---------------------------");
-        ArrayList<String> tableData = store.getTableData(tableName);
+        List<String> tableData = store.getTableData(tableName);
         for (String s : tableData) {
             view.writeln(s);
         }

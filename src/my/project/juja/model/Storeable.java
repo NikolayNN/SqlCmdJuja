@@ -2,6 +2,7 @@ package my.project.juja.model;
 
 import java.sql.Connection;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Nikol on 5/2/2016.
@@ -17,9 +18,9 @@ public interface Storeable {
 
     void addRecord(String tableName, String columnNames, String columnValues);
 
-    String getTableList();
+    List<String> getTableList();
 
-    String getColumnName(String tableName);
+    List<String> getColumnName(String tableName);
 
-    ArrayList<String> getTableData(String tableName);
+    List<String> getTableData(String tableName);
 }

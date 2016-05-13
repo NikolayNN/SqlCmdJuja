@@ -234,7 +234,7 @@ public class IntegrationTest {
                 "please, input your command or 'help'\r\n" +
                 "OK.\r\n" +
                 "please, input your command or 'help'\r\n" +
-                "[users2, users]\r\n" +
+                "[users, users2]\r\n" +
                 "please, input your command or 'help'\r\n" +
                 "Connection to data base was closed\r\n" +
                 "Goodbye\r\n", getData());
