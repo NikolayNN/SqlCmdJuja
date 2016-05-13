@@ -9,15 +9,14 @@ package my.project.juja.model;
  * Created by Nikol on 4/12/2016.
  */
 public class JDBCDataBase implements Storeable {
-
     private static final String ERROR_WRONG_TABLENAME = "ERROR. check table name";
     private static final String ERROR_WRONG_COMMAND = "ERROR. check inputed command";
     private static final String ERROR_WRONG_PARAMETERS_COUNT = "ERROR. wrong paramaters count";
-    private static Connection connection;
-    private static String dbName;
     private static  final String ERROR_JDBCDRIVER_NOT_FOUND = "ERROR. add jdbc driver to project";
     private static  final String ERROR_CONNECT_UNSUCCESSFUL = "ERROR. connect to database unsuccessful, check your command";
     private static  final String ERROR_CONNECTION_NOT_EXIST = "ERROR. at first connect to database";
+    private Connection connection;
+    private static String dbName;
 
     @Override
     public void getConnection(String dbName, String login, String password) {
@@ -54,13 +53,16 @@ public class JDBCDataBase implements Storeable {
         }
     }
 
-    @Override
-    public void clearTable(String tableName){
+    private void checkConnection()throws RuntimeException{
         if(connection == null){
             throw new RuntimeException(ERROR_CONNECTION_NOT_EXIST);
         }
+    }
+
+    @Override
+    public void clearTable(String tableName){
+    checkConnection();
         try (Statement stmt = connection.createStatement()){
-//            stmt = connection.createStatement();
             String sql = "DELETE FROM " + tableName;
             stmt.executeUpdate(sql);
         }catch (SQLException ex) {
@@ -69,9 +71,7 @@ public class JDBCDataBase implements Storeable {
     }
 
     public void addRecord(String tableName, String ... values) {
-        if(connection == null){
-            throw new RuntimeException(ERROR_CONNECTION_NOT_EXIST);
-        }
+        checkConnection();
         try (Statement stmt = connection.createStatement()) {
             String valuesQuery = "";
             for (int i = 0; i < values.length; i++) {
@@ -80,7 +80,6 @@ public class JDBCDataBase implements Storeable {
                     continue;
                 }else valuesQuery += " , ";
             }
-
             String sql = "INSERT INTO " + tableName +
                     " VALUES (" + valuesQuery + ")";
             System.out.println(sql);
@@ -93,20 +92,12 @@ public class JDBCDataBase implements Storeable {
 
     @Override
     public void addRecord(String tableName, String columnNames, String columnValues) {
-        if(connection == null){
-            throw new RuntimeException(ERROR_CONNECTION_NOT_EXIST);
-        }
-//        if(columnNames.length != columnValues.length){
-//            throw new RuntimeException(ERROR_WRONG_PARAMETERS_COUNT);
-//        }
-
+        checkConnection();
         columnNames = parcer(columnNames, "\"");
         columnValues = parcer(columnValues, "'");
-
         try (Statement stmt = connection.createStatement()) {
-            String sql = "INSERT INTO " + tableName + "(" + columnNames + ")" +
-                    " VALUES (" + columnValues + ")";
-            System.out.println(sql);
+            String sql =    "INSERT INTO " + tableName + "(" + columnNames + ")" +
+                            " VALUES (" + columnValues + ")";
             stmt.executeUpdate(sql);
             stmt.close();
         }catch (SQLException ex){
@@ -119,28 +110,24 @@ public class JDBCDataBase implements Storeable {
         String[] word = line.split(Command.SEPARATOR);
         String result = "";
         for (int i = 0; i < word.length; i++) {
-
             result += s + word[i] + s;
             if (!(i == word.length-1)){
                 result += ",";
             }else {
                 break;
             }
-
         }
         return result;
     }
 
     @Override
     public String getTableList(){
-        if(connection == null){
-            throw new RuntimeException(ERROR_CONNECTION_NOT_EXIST);
-        }
+        checkConnection();
         String result = "no one table exist in " + dbName;
-        String query = "SELECT table_name" +
-                "        FROM information_schema.tables" +
-                "        WHERE table_schema='public'" +
-                "        AND table_type='BASE TABLE';";
+        String query =  "SELECT table_name" +
+                        " FROM information_schema.tables" +
+                        " WHERE table_schema='public'" +
+                        " AND table_type='BASE TABLE';";
         try(Statement stmt = connection.createStatement(); ResultSet rs = stmt.executeQuery(query) )  {
             Set<String> tables = new HashSet<>();
             while (rs.next()) {
@@ -156,14 +143,10 @@ public class JDBCDataBase implements Storeable {
         return result;
     }
 
-
-
     @Override
     public String getColumnName(String tableName){
         String result = "";
-        if(connection == null){
-            throw new RuntimeException(ERROR_CONNECTION_NOT_EXIST);
-        }
+        checkConnection();
         String query = "SELECT * FROM " + tableName;
         try(Statement stmt = connection.createStatement();
             ResultSet rs = stmt.executeQuery(query)) {
@@ -179,6 +162,7 @@ public class JDBCDataBase implements Storeable {
 
     @Override
     public ArrayList<String> getTableData(String tableName){
+        checkConnection();
         ArrayList<String> result = new ArrayList<>();
         String query = "SELECT * FROM " + tableName;
         try(Statement stmt = connection.createStatement();
