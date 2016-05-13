@@ -70,26 +70,6 @@ public class JDBCDataBase implements Storeable {
         }
     }
 
-    public void addRecord(String tableName, String ... values) {
-        checkConnection();
-        try (Statement stmt = connection.createStatement()) {
-            String valuesQuery = "";
-            for (int i = 0; i < values.length; i++) {
-                valuesQuery += "'" + values[i] + "'";
-                if(i == values.length - 1){
-                    continue;
-                }else valuesQuery += " , ";
-            }
-            String sql = "INSERT INTO " + tableName +
-                    " VALUES (" + valuesQuery + ")";
-            System.out.println(sql);
-            stmt.executeUpdate(sql);
-            stmt.close();
-        }catch (SQLException ex){
-            throw new RuntimeException(ERROR_WRONG_COMMAND);
-        }
-    }
-
     @Override
     public void addRecord(String tableName, String columnNames, String columnValues) {
         checkConnection();

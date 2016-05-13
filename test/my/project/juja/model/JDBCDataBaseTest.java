@@ -24,7 +24,7 @@ public class JDBCDataBaseTest {
 
         JDBCDataBase.clearTable("users");
 
-        JDBCDataBase.addRecord("users", "alex", "FadH74Gne", "123");
+        JDBCDataBase.addRecord("users","name password Id", "alex FadH74Gne 123");
 
         ArrayList<String> recordList = JDBCDataBase.getTableData("users");
         String actual = recordList.get(0);
@@ -47,9 +47,9 @@ public class JDBCDataBaseTest {
     @Test
     public void getTableData(){
         JDBCDataBase.clearTable("users");
-        JDBCDataBase.addRecord("users", "login1", "pass1", "1");
-        JDBCDataBase.addRecord("users", "login2", "pass2", "2");
-        JDBCDataBase.addRecord("users", "login3", "pass3", "3");
+        JDBCDataBase.addRecord("users","name password Id", "login1 pass1 1");
+        JDBCDataBase.addRecord("users","name password Id", "login2 pass2 2");
+        JDBCDataBase.addRecord("users","name password Id", "login3 pass3 3");
 
         List<String> actualList = JDBCDataBase.getTableData("users");
         String actual = "";
