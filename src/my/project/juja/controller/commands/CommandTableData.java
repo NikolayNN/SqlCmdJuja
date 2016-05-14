@@ -26,6 +26,7 @@ public class CommandTableData extends Command{
         for (String columnName : columnNames) {
             view.write(columnName + "|");
         }
+        view.writeln();
         view.writeln("---------------------------");
         List<String> tableData = store.getTableData(tableName);
         for (String s : tableData) {

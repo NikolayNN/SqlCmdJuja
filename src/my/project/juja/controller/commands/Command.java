@@ -11,10 +11,11 @@ public abstract class Command{
     public static final String HELP = "help";
     public static final String EXIT = "exit";
     public static final String CONNECTION = "connect";
-    public static final String TABLE_LIST = "tablelist";
-    public static final String TABLE_DATA = "tabledata";
-    public static final String ADD_RECORD = "addrecord";
-    public static final String CLEAR_TABLE = "cleartable";
+    public static final String TABLE_LIST = "table-list";
+    public static final String TABLE_DATA = "table-data";
+    public static final String ADD_RECORD = "add-record";
+    public static final String CLEAR_TABLE = "clear-table";
+    public static final String SET_COL = "col";
     public static final String SEPARATOR = " ";
     public static final String MESSAGE_COMMAND_PERFORMED_SUCCESSFUL = "OK.";
 

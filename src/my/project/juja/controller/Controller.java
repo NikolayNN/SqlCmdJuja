@@ -1,6 +1,5 @@
 package my.project.juja.controller;
 
-import my.project.juja.controller.CommandFactory;
 import my.project.juja.controller.commands.Command;
 import my.project.juja.model.JDBCDataBase;
 import my.project.juja.model.Storeable;
@@ -14,7 +13,7 @@ public class Controller {
     public void start(){
         View view = new Console();
         Storeable store = new JDBCDataBase();
-        CommandFactory commandFactory = new CommandFactory(store, view);
+        CommandFactory commandFactory = new MainCommandFactory(store, view);
         view.writeln("Hello");
         String source = "";
         while (!source.equalsIgnoreCase(Command.EXIT)){

@@ -10,8 +10,7 @@ import java.util.List;
  */
 public class TempTable {
     private String tableName;
-    private int tableSize;
-
+    private int columnCount;
     private List<String> columnsNameList;
     private int[] columnsToEditIdx;
     private String columnsNameWithIdx;
@@ -22,11 +21,15 @@ public class TempTable {
         records = new ArrayList<>();
     }
 
+    public int getColumnCount() {
+        return columnCount;
+    }
+
     public TempTable(Storeable store, String tableName) {
         this.tableName = tableName;
         this.store = store;
         this.columnsNameList = store.getColumnName(tableName);
-        this.tableSize = columnsNameList.size();
+        this.columnCount = columnsNameList.size();
     }
 
     public String getColumnsNameWithIdx(){
@@ -58,7 +61,7 @@ public class TempTable {
             return -1;
         }
         for (int i = 0; i < idx.length; i++) {
-            if((idx[i] > tableSize) || (idx[i]<0)){
+            if((idx[i] > columnCount) || (idx[i]<0)){
                 return -1;
             }
         }
@@ -74,7 +77,6 @@ public class TempTable {
     }
 
     public void addTableLine(String line){
-        System.out.println(line);
         records.add(line);
     }
 
@@ -94,7 +96,7 @@ public class TempTable {
         columnsNameList = null;
         columnsToEditIdx = null;
         columnsNameWithIdx = null;
-        tableSize = 0;
+        columnCount = 0;
         records = null;
     }
 

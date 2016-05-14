@@ -1,38 +1,10 @@
 package my.project.juja.controller;
 
-import my.project.juja.controller.commands.*;
-import my.project.juja.controller.commands.CommandAddRecord;
-import my.project.juja.model.Storeable;
-import my.project.juja.view.View;
+import my.project.juja.controller.commands.Command;
 
 /**
- * Created by Nikol on 4/13/2016.
+ * Created by Nikol on 5/14/2016.
  */
-public class CommandFactory{
-    Storeable store;
-    View view;
-    public Command[] supportedCommands;
-
-    public CommandFactory(Storeable store, View view) {
-        this.store = store;
-        this.view = view;
-        supportedCommands = new Command[]{new ComandConnection(store, view),
-                new CommandExit(store, view),
-                new CommandTableList(store, view),
-                new CommandTableData(store, view),
-                new CommandAddRecord(store, view),
-                new CommandClearTable(store, view),
-                new CommandHelp(view)};
-    }
-
-    public Command createCommand(String source) {
-        String command = source.split(Command.SEPARATOR)[0];
-        for (int i = 0; i < supportedCommands.length; i++) {
-            if (command.equalsIgnoreCase(supportedCommands[i].getName())) {
-                supportedCommands[i].setup(source);
-                return supportedCommands[i];
-            }
-        }
-        return new CommandWrong(view);
-    }
+public interface CommandFactory {
+    Command createCommand(String source);
 }
