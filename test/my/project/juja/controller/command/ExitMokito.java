@@ -2,7 +2,6 @@ package my.project.juja.controller.command;
 
 import my.project.juja.controller.commands.Command;
 import my.project.juja.controller.commands.Exit;
-import my.project.juja.model.Storeable;
 import my.project.juja.view.View;
 import org.junit.Before;
 import org.junit.Test;

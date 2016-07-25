@@ -1,12 +1,11 @@
 package my.project.juja.model;
-        import my.project.juja.controller.commands.Command;
         import java.sql.*;
         import java.util.*;
 
 /**
  * Created by Nikol on 4/12/2016.
  */
-public class DataBase implements Storeable {
+public class DataBase {
     private static final String ERROR_WRONG_TABLENAME = "ERROR. check table name";
     private static final String ERROR_WRONG_COMMAND = "ERROR. check inputed command";
     private static final String ERROR_WRONG_PARAMETERS_COUNT = "ERROR. wrong paramaters count";
@@ -14,11 +13,14 @@ public class DataBase implements Storeable {
     private static  final String ERROR_CONNECT_UNSUCCESSFUL = "ERROR. connect to database unsuccessful, check your command";
     private static  final String ERROR_CONNECTION_NOT_EXIST = "ERROR. at first connect to database";
     private Connection connection;
-    private static String dbName;
+    private static final String dbName = "gelios";
+    private static final String login = "postgres";
+    private static final String password = "root";
 
-    @Override
-    public void getConnection(String dbName, String login, String password) {
-        DataBase.dbName = dbName;
+
+
+    public void getConnection() {
+
         try {
             Class.forName("org.postgresql.Driver");
         } catch (ClassNotFoundException e) {
@@ -31,17 +33,10 @@ public class DataBase implements Storeable {
         } catch (SQLException ex) {
             throw new RuntimeException(ERROR_CONNECT_UNSUCCESSFUL + " " + ex.getMessage());
         }
-        if (connection == null) {
-            throw new RuntimeException(ERROR_CONNECT_UNSUCCESSFUL);
-        }
+
     }
 
-    @Override
-    public Connection getConnection() {
-        return connection;
-    }
 
-    @Override
     public void closeConnection(){
         try {
             connection.close();
@@ -57,86 +52,8 @@ public class DataBase implements Storeable {
         }
     }
 
-    @Override
-    public void clearTable(String tableName){
-    checkConnection();
-        try (Statement stmt = connection.createStatement()){
-            String sql = "DELETE FROM " + tableName;
-            stmt.executeUpdate(sql);
-        }catch (SQLException ex) {
-            throw new RuntimeException(ERROR_WRONG_TABLENAME);
-        }
-    }
-
-    @Override
-    public void addRecord(String tableName, String columnNames, String columnValues) {
-        checkConnection();
-        columnNames = format(columnNames, "\"");
-        columnValues = format(columnValues, "'");
-        try (Statement stmt = connection.createStatement()) {
-            String sql =    "INSERT INTO " + tableName + "(" + columnNames + ")" +
-                            " VALUES (" + columnValues + ")";
-            stmt.executeUpdate(sql);
-            stmt.close();
-        }catch (SQLException ex){
-            throw new RuntimeException(ERROR_WRONG_COMMAND);
-        }
-    }
 
 
-    private String format(String line, String quoteType) {
-        String[] word = line.split(Command.SEPARATOR);
-        String result = "";
-        for (int i = 0; i < word.length; i++) {
-            result += quoteType + word[i] + quoteType;
-            if (!(i == word.length-1)){
-                result += ",";
-            }else {
-                break;
-            }
-        }
-        return result;
-    }
-
-    @Override
-    public Set<String> getTableList(){
-        checkConnection();
-        Set<String> result = new LinkedHashSet<>();
-        String query =  "SELECT table_name" +
-                        " FROM information_schema.tables" +
-                        " WHERE table_schema='public'" +
-                        " AND table_type='BASE TABLE';";
-        try(Statement stmt = connection.createStatement(); ResultSet rs = stmt.executeQuery(query) )  {
-            Set<String> tables = new HashSet<>();
-            while (rs.next()) {
-                result.add(rs.getString("table_name"));
-            }
-            rs.close();
-            stmt.close();
-        }catch (SQLException ex){
-            throw new RuntimeException(ERROR_WRONG_COMMAND);
-        }
-        return result;
-    }
-
-    @Override
-    public List<String> getColumnName(String tableName){
-        checkConnection();
-        List<String> result = new ArrayList<>();
-        String query = "SELECT * FROM " + tableName + " Limit 1";
-        try(Statement stmt = connection.createStatement();
-            ResultSet rs = stmt.executeQuery(query)) {
-            ResultSetMetaData rsmd = rs.getMetaData();
-            for (int i = 1; i <= rsmd.getColumnCount(); i++) {
-                result.add(rsmd.getColumnName(i));
-            }
-        }catch (SQLException ex){
-            throw new RuntimeException(ERROR_WRONG_TABLENAME);
-        }
-        return result;
-    }
-
-    @Override
     public List<String> getTableData(String tableName){
         checkConnection();
         List<String> result = new ArrayList<>();

@@ -2,16 +2,13 @@ package my.project.juja.controller.command;
 
 import my.project.juja.controller.commands.Command;
 import my.project.juja.controller.commands.TableList;
-import my.project.juja.model.Storeable;
 import my.project.juja.view.View;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
 
-import java.util.ArrayList;
 import java.util.LinkedHashSet;
-import java.util.List;
 import java.util.Set;
 
 import static org.junit.Assert.assertEquals;
