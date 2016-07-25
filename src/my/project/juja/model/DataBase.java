@@ -7,8 +7,6 @@ package my.project.juja.model;
  */
 public class DataBase {
     private static final String ERROR_WRONG_TABLENAME = "ERROR. check table name";
-    private static final String ERROR_WRONG_COMMAND = "ERROR. check inputed command";
-    private static final String ERROR_WRONG_PARAMETERS_COUNT = "ERROR. wrong paramaters count";
     private static  final String ERROR_JDBCDRIVER_NOT_FOUND = "ERROR. add jdbc driver to project";
     private static  final String ERROR_CONNECT_UNSUCCESSFUL = "ERROR. connect to database unsuccessful, check your command";
     private static  final String ERROR_CONNECTION_NOT_EXIST = "ERROR. at first connect to database";
@@ -16,11 +14,9 @@ public class DataBase {
     private static final String dbName = "gelios";
     private static final String login = "postgres";
     private static final String password = "root";
-
-
+    private static final String tableName = "storage1";
 
     public void getConnection() {
-
         try {
             Class.forName("org.postgresql.Driver");
         } catch (ClassNotFoundException e) {
@@ -54,7 +50,7 @@ public class DataBase {
 
 
 
-    public List<String> getTableData(String tableName){
+    public List<String> getTableData(){
         checkConnection();
         List<String> result = new ArrayList<>();
         String query = "SELECT * FROM " + tableName;
