@@ -6,14 +6,14 @@ import my.project.juja.view.View;
 /**
  * Created by Nikol on 4/13/2016.
  */
-public class CommandWrong extends Command {
-    public CommandWrong(View view) {
+public class Wrong extends Command {
+    public Wrong(View view) {
         super(view);
     }
 
     @Override
     public void perform() {
-        view.writeln("this command doesn't exist, please check your command");
+        view.writeln("This command doesn't exist, please check your command");
     }
 
     @Override

@@ -6,10 +6,10 @@ import my.project.juja.view.View;
 /**
  * Created by Nikol on 4/30/2016.
  */
-public class CommandClearTable extends Command {
+public class ClearTable extends Command {
     private static final int countParameters = 1;
     public static final String name = Command.CLEAR_TABLE;
-    public CommandClearTable(Storeable store, View view) {
+    public ClearTable(Storeable store, View view) {
         super(store, view);
     }
 

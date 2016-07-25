@@ -1,7 +1,7 @@
 package my.project.juja.controller.command;
 
 import my.project.juja.controller.commands.Command;
-import my.project.juja.controller.commands.CommandTableList;
+import my.project.juja.controller.commands.TableList;
 import my.project.juja.model.Storeable;
 import my.project.juja.view.View;
 import org.junit.Before;
@@ -9,18 +9,18 @@ import org.junit.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
 
-import java.sql.Connection;
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.atLeast;
 import static org.mockito.Mockito.verify;
 
 /**
  * Created by Nikol on 5/11/2016.
  */
-public class CommandTableListMockito {
+public class TableListMockito {
     private Storeable store;
     private View view;
 
@@ -33,8 +33,8 @@ public class CommandTableListMockito {
     @Test
     public void test(){
         //given
-        Command command = new CommandTableList(store,view);
-        List<String> tableList = new ArrayList<>();
+        Command command = new TableList(store,view);
+        Set<String> tableList = new LinkedHashSet<>();
         tableList.add("TestTable1");
         tableList.add("TestTable2");
         Mockito.when(store.getTableList()).thenReturn(tableList);

@@ -7,10 +7,10 @@ import my.project.juja.view.View;
 /**
  * Created by Nikol on 4/13/2016.
  */
-public class ComandConnection extends Command {
+public class Connection extends Command {
     private static final int EXPECTED_COUNT_PARAMETERS = 3;
     public static final String name = Command.CONNECTION;
-    public ComandConnection(Storeable store, View view) {
+    public Connection(Storeable store, View view) {
         super(store, view);
     }
 
@@ -21,7 +21,7 @@ public class ComandConnection extends Command {
         String login = parametrs[1];
         String password = parametrs[2];
         store.getConnection(dbName, login, password);
-        view.writeln(MESSAGE_COMMAND_PERFORMED_SUCCESSFUL);
+        view.writeln("Connect to " + dbName + " successful!");
     }
 
     @Override

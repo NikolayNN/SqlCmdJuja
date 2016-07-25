@@ -15,11 +15,8 @@ public abstract class Command{
     public static final String TABLE_DATA = "table-data";
     public static final String ADD_RECORD = "add-record";
     public static final String CLEAR_TABLE = "clear-table";
-    public static final String SET_COL = "col";
     public static final String SEPARATOR = " ";
-    public static final String MESSAGE_COMMAND_PERFORMED_SUCCESSFUL = "OK.";
 
-    protected String source;
     protected String command;
     protected int countParametrs;
     protected String[] parametrs;
@@ -36,19 +33,19 @@ public abstract class Command{
     }
 
     public void setup(String source){
-        this.source = source;
-        String[] splitedFullString = source.split(SEPARATOR);
-        command = splitedFullString[0];
-        this.countParametrs = splitedFullString.length-1;
-        parametrs = new String[countParametrs];
-        if(splitedFullString.length > 1){
-            System.arraycopy(splitedFullString, 1, parametrs, 0, parametrs.length);
+        String[] splitedSource = source.split(SEPARATOR);
+        this.command = splitedSource[0];
+        this.countParametrs = splitedSource.length-1;
+        this.parametrs = new String[countParametrs];
+        if(splitedSource.length > 1){
+            System.arraycopy(splitedSource, 1, parametrs, 0, parametrs.length);
         }
     }
 
     public void checkCountParameters(String parameters[] , int expectedCount){
         if(parameters.length != expectedCount){
-            throw new RuntimeException("Wrong count parameters expected " + expectedCount + ", but found " + parameters.length);
+            throw new RuntimeException("Wrong count parameters expected " +
+                                        expectedCount + ", but found " + parameters.length);
         }
     }
     public abstract void perform();

@@ -6,9 +6,9 @@ import my.project.juja.view.View;
 /**
  * Created by Nikol on 4/13/2016.
  */
-public class CommandExit extends Command{
+public class Exit extends Command{
     public static final String name = Command.EXIT;
-    public CommandExit(Storeable store, View view) {
+    public Exit(Storeable store, View view) {
         super(store, view);
     }
 

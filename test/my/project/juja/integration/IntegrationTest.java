@@ -42,7 +42,7 @@ public class IntegrationTest {
             return e.getMessage();
         }
     }
-    @Ignore
+
     @Test
     public void testHelp(){
         //given
@@ -52,14 +52,20 @@ public class IntegrationTest {
         Main.main(new String[0]);
         //then
         assertEquals("Hello\r\n" +
-                "please, input your command or 'help'\r\n" +
-                "connect - Connect to database 'connect dbname login password'\r\n" +
-                "tablelist - Show exist tables in the current database 'tablelist'\r\n" +
-                "tabledata - Show table rows 'tabledata tableName'\r\n" +
-                "addrecord - Add record in the selectd table 'addrecord tableName'\r\n" +
-                "cleartable - clear selected table 'cleartable tableName'\r\n" +
-                "exit- close connection to a database and exit\r\n" +
-                "please, input your command or 'help'\r\n" +
+                "Input your command or 'help'\r\n" +
+                "connect\r\n" +
+                "\t - Connect to database 'connect dbname login password'\r\n" +
+                "table-list\r\n" +
+                "\t - Show exist tables in the current database 'tablelist'\r\n" +
+                "table-data\r\n" +
+                "\t - Show table rows 'tabledata tableName'\r\n" +
+                "add-record\r\n" +
+                "\t - Add record in the selectd table 'addrecord tableName'\r\n" +
+                "clear-table\r\n" +
+                "\t - Clear selected table 'cleartable tableName'\r\n" +
+                "exit\r\n" +
+                "\t - Close connection to a database and exit\r\n" +
+                "Input your command or 'help'\r\n" +
                 "Goodbye\r\n",getData());
 
     }
@@ -72,9 +78,9 @@ public class IntegrationTest {
         Main.main(new String[0]);
         //then
         assertEquals("Hello\r\n" +
-                "please, input your command or 'help'\r\n" +
+                "Input your command or 'help'\r\n" +
                 "ERROR. at first connect to database\r\n" +
-                "please, input your command or 'help'\r\n" +
+                "Input your command or 'help'\r\n" +
                 "Goodbye\r\n", getData());
     }
 
@@ -87,9 +93,9 @@ public class IntegrationTest {
         Main.main(new String[0]);
         //then
         assertEquals("Hello\r\n" +
-                "please, input your command or 'help'\r\n" +
-                "ERROR. at first connect to database\r\n" +
-                "please, input your command or 'help'\r\n" +
+                "Input your command or 'help'\r\n" +
+                "Wrong count parameters expected 1, but found 0\r\n" +
+                "Input your command or 'help'\r\n" +
                 "Goodbye\r\n",getData());
     }
 
@@ -102,9 +108,9 @@ public class IntegrationTest {
         Main.main(new String[0]);
         //then
         assertEquals("Hello\r\n" +
-                "please, input your command or 'help'\r\n" +
-                "this command doesn't exist, please check your command\r\n" +
-                "please, input your command or 'help'\r\n" +
+                "Input your command or 'help'\r\n" +
+                "This command doesn't exist, please check your command\r\n" +
+                "Input your command or 'help'\r\n" +
                 "Goodbye\r\n",getData());
     }
 
@@ -120,9 +126,9 @@ public class IntegrationTest {
         Main.main(new String[0]);
         //then
         assertEquals("Hello\r\n" +
-                "please, input your command or 'help'\r\n" +
-                "OK.\r\n" +
-                "please, input your command or 'help'\r\n" +
+                "Input your command or 'help'\r\n" +
+                "Connect to sqlcmd successful!\r\n" +
+                "Input your command or 'help'\r\n" +
                 "Connection to data base was closed\r\n" +
                 "Goodbye\r\n",getData());
     }
@@ -139,9 +145,9 @@ public class IntegrationTest {
         Main.main(new String[0]);
         //then
         assertEquals("Hello\r\n" +
-                "please, input your command or 'help'\r\n" +
+                "Input your command or 'help'\r\n" +
                 "ERROR. connect to database unsuccessful, check your command FATAL: database \"WrongDataBaseName\" does not exist\r\n" +
-                "please, input your command or 'help'\r\n" +
+                "Input your command or 'help'\r\n" +
                 "Goodbye\r\n", getData());
     }
 
@@ -157,9 +163,9 @@ public class IntegrationTest {
         Main.main(new String[0]);
         //then
         assertEquals("Hello\r\n" +
-                "please, input your command or 'help'\r\n" +
+                "Input your command or 'help'\r\n" +
                 "ERROR. connect to database unsuccessful, check your command FATAL: password authentication failed for user \"wrongLogin\"\r\n" +
-                "please, input your command or 'help'\r\n" +
+                "Input your command or 'help'\r\n" +
                 "Goodbye\r\n", getData());
     }
 
@@ -175,9 +181,9 @@ public class IntegrationTest {
         Main.main(new String[0]);
         //then
         assertEquals("Hello\r\n" +
-                "please, input your command or 'help'\r\n" +
+                "Input your command or 'help'\r\n" +
                 "ERROR. connect to database unsuccessful, check your command FATAL: password authentication failed for user \"postgres\"\r\n" +
-                "please, input your command or 'help'\r\n" +
+                "Input your command or 'help'\r\n" +
                 "Goodbye\r\n", getData());
     }
 
@@ -194,11 +200,11 @@ public class IntegrationTest {
         Main.main(new String[0]);
         //then
         assertEquals("Hello\r\n" +
-                "please, input your command or 'help'\r\n" +
-                "OK.\r\n" +
-                "please, input your command or 'help'\r\n" +
-                "this command doesn't exist, please check your command\r\n" +
-                "please, input your command or 'help'\r\n" +
+                "Input your command or 'help'\r\n" +
+                "Connect to sqlcmd successful!\r\n" +
+                "Input your command or 'help'\r\n" +
+                "This command doesn't exist, please check your command\r\n" +
+                "Input your command or 'help'\r\n" +
                 "Connection to data base was closed\r\n" +
                 "Goodbye\r\n", getData());
     }
@@ -212,9 +218,9 @@ public class IntegrationTest {
         Main.main(new String[0]);
         //then
         assertEquals("Hello\r\n" +
-                "please, input your command or 'help'\r\n" +
+                "Input your command or 'help'\r\n" +
                 "Wrong count parameters expected 3, but found 0\r\n" +
-                "please, input your command or 'help'\r\n" +
+                "Input your command or 'help'\r\n" +
                 "Goodbye\r\n", getData());
     }
 
@@ -231,11 +237,11 @@ public class IntegrationTest {
         Main.main(new String[0]);
         //then
         assertEquals("Hello\r\n" +
-                "please, input your command or 'help'\r\n" +
-                "OK.\r\n" +
-                "please, input your command or 'help'\r\n" +
+                "Input your command or 'help'\r\n" +
+                "Connect to sqlcmd successful!\r\n" +
+                "Input your command or 'help'\r\n" +
                 "[users, users2]\r\n" +
-                "please, input your command or 'help'\r\n" +
+                "Input your command or 'help'\r\n" +
                 "Connection to data base was closed\r\n" +
                 "Goodbye\r\n", getData());
     }
@@ -253,11 +259,11 @@ public class IntegrationTest {
         Main.main(new String[0]);
         //then
         assertEquals("Hello\r\n" +
-                "please, input your command or 'help'\r\n" +
-                "OK.\r\n" +
-                "please, input your command or 'help'\r\n" +
+                "Input your command or 'help'\r\n" +
+                "Connect to sqlcmd successful!\r\n" +
+                "Input your command or 'help'\r\n" +
                 "users has been cleared\r\n" +
-                "please, input your command or 'help'\r\n" +
+                "Input your command or 'help'\r\n" +
                 "Connection to data base was closed\r\n" +
                 "Goodbye\r\n", getData());
     }
@@ -271,9 +277,9 @@ public class IntegrationTest {
         Main.main(new String[0]);
         //then
         assertEquals("Hello\r\n" +
-                "please, input your command or 'help'\r\n" +
+                "Input your command or 'help'\r\n" +
                 "ERROR. at first connect to database\r\n" +
-                "please, input your command or 'help'\r\n" +
+                "Input your command or 'help'\r\n" +
                 "Goodbye\r\n", getData());
     }
 
@@ -290,11 +296,11 @@ public class IntegrationTest {
         Main.main(new String[0]);
         //then
         assertEquals("Hello\r\n" +
-                "please, input your command or 'help'\r\n" +
-                "OK.\r\n" +
-                "please, input your command or 'help'\r\n" +
+                "Input your command or 'help'\r\n" +
+                "Connect to sqlcmd successful!\r\n" +
+                "Input your command or 'help'\r\n" +
                 "ERROR. check table name\r\n" +
-                "please, input your command or 'help'\r\n" +
+                "Input your command or 'help'\r\n" +
                 "Connection to data base was closed\r\n" +
                 "Goodbye\r\n", getData());
     }
@@ -312,11 +318,11 @@ public class IntegrationTest {
         Main.main(new String[0]);
         //then
         assertEquals("Hello\r\n" +
-                "please, input your command or 'help'\r\n" +
-                "OK.\r\n" +
-                "please, input your command or 'help'\r\n" +
+                "Input your command or 'help'\r\n" +
+                "Connect to sqlcmd successful!\r\n" +
+                "Input your command or 'help'\r\n" +
                 "Wrong count parameters expected 1, but found 0\r\n" +
-                "please, input your command or 'help'\r\n" +
+                "Input your command or 'help'\r\n" +
                 "Connection to data base was closed\r\n" +
                 "Goodbye\r\n", getData());
     }

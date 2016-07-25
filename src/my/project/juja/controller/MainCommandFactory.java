@@ -1,7 +1,7 @@
 package my.project.juja.controller;
 
 import my.project.juja.controller.commands.*;
-import my.project.juja.controller.commands.CommandAddRecord;
+import my.project.juja.controller.commands.AddRecord;
 import my.project.juja.model.Storeable;
 import my.project.juja.view.View;
 
@@ -16,13 +16,13 @@ public class MainCommandFactory implements CommandFactory {
     public MainCommandFactory(Storeable store, View view) {
         this.store = store;
         this.view = view;
-        supportedCommands = new Command[]{new ComandConnection(store, view),
-                new CommandExit(store, view),
-                new CommandTableList(store, view),
-                new CommandTableData(store, view),
-                new CommandAddRecord(store, view),
-                new CommandClearTable(store, view),
-                new CommandHelp(view)};
+        supportedCommands = new Command[]{new Connection(store, view),
+                new Exit(store, view),
+                new TableList(store, view),
+                new TableData(store, view),
+                new AddRecord(store, view),
+                new ClearTable(store, view),
+                new Help(view)};
     }
 
     @Override
@@ -34,6 +34,6 @@ public class MainCommandFactory implements CommandFactory {
                 return supportedCommands[i];
             }
         }
-        return new CommandWrong(view);
+        return new Wrong(view);
     }
 }

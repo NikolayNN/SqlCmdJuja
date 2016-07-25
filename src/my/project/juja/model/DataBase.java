@@ -1,15 +1,12 @@
 package my.project.juja.model;
         import my.project.juja.controller.commands.Command;
         import java.sql.*;
-        import java.util.ArrayList;
-        import java.util.HashSet;
-        import java.util.List;
-        import java.util.Set;
+        import java.util.*;
 
 /**
  * Created by Nikol on 4/12/2016.
  */
-public class JDBCDataBase implements Storeable {
+public class DataBase implements Storeable {
     private static final String ERROR_WRONG_TABLENAME = "ERROR. check table name";
     private static final String ERROR_WRONG_COMMAND = "ERROR. check inputed command";
     private static final String ERROR_WRONG_PARAMETERS_COUNT = "ERROR. wrong paramaters count";
@@ -21,7 +18,7 @@ public class JDBCDataBase implements Storeable {
 
     @Override
     public void getConnection(String dbName, String login, String password) {
-        JDBCDataBase.dbName = dbName;
+        DataBase.dbName = dbName;
         try {
             Class.forName("org.postgresql.Driver");
         } catch (ClassNotFoundException e) {
@@ -102,9 +99,9 @@ public class JDBCDataBase implements Storeable {
     }
 
     @Override
-    public List<String> getTableList(){
+    public Set<String> getTableList(){
         checkConnection();
-        List<String> result = new ArrayList<>();
+        Set<String> result = new LinkedHashSet<>();
         String query =  "SELECT table_name" +
                         " FROM information_schema.tables" +
                         " WHERE table_schema='public'" +

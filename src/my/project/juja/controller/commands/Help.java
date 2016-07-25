@@ -5,9 +5,9 @@ import my.project.juja.view.View;
 /**
  * Created by Nikol on 4/26/2016.
  */
-public class CommandHelp extends Command {
+public class Help extends Command {
     public static final String name = Command.HELP;
-    public CommandHelp(View view) {
+    public Help(View view) {
         super(view);
     }
 

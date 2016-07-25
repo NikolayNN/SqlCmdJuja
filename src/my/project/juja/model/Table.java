@@ -8,42 +8,30 @@ import java.util.List;
 /**
  * Created by Nikol on 4/21/2016.
  */
-public class TempTable {
-    private String tableName;
-    private int columnCount;
-    private List<String> columnsNameList;
-    private int[] columnsToEditIdx;
-    private String columnsNameWithIdx;
-    private List<String> records;
+public class Table {
     private Storeable store;
+    private String tableName;
+    private List<String> columnNames;
+    private int columnQuantity;
+    private List<String> records;
+    private int[] columnsToEdit; //todo move this field to another class
 
     {
         records = new ArrayList<>();
     }
 
-    public int getColumnCount() {
-        return columnCount;
+    public List<String> getColumnNames() {
+        return columnNames;
+    }
+    public int getColumnQuantity() {
+        return columnQuantity;
     }
 
-    public TempTable(Storeable store, String tableName) {
-        this.tableName = tableName;
+    public Table(Storeable store, String tableName) {
         this.store = store;
-        this.columnsNameList = store.getColumnName(tableName);
-        this.columnCount = columnsNameList.size();
-    }
-
-    public String getColumnsNameWithIdx(){
-        if (columnsNameWithIdx == null){
-            setColumnsNameWithIdx();
-        }
-        return columnsNameWithIdx;
-    }
-
-    private void setColumnsNameWithIdx(){
-        columnsNameWithIdx = "";
-        for (int i = 0; i < columnsNameList.size(); i++) {
-            columnsNameWithIdx += columnsNameList.get(i) + "(" + i + ") ";
-        }
+        this.tableName = tableName;
+        this.columnNames = store.getColumnName(tableName);
+        this.columnQuantity = columnNames.size();
     }
 
     private int[] stringToArrayInt(String s){
@@ -61,7 +49,7 @@ public class TempTable {
             return -1;
         }
         for (int i = 0; i < idx.length; i++) {
-            if((idx[i] > columnCount) || (idx[i]<0)){
+            if((idx[i] > columnQuantity) || (idx[i]<0)){
                 return -1;
             }
         }
@@ -72,7 +60,7 @@ public class TempTable {
                 return -1;
             }
         }
-        columnsToEditIdx = idx;
+        columnsToEdit = idx;
         return 1;
     }
 
@@ -82,8 +70,8 @@ public class TempTable {
 
     public void saveTable(){
         String columnsToEdit = "";
-        for (int i = 0; i < columnsToEditIdx.length; i++) {
-            columnsToEdit += columnsNameList.get(columnsToEditIdx[i]) + Command.SEPARATOR;
+        for (int i = 0; i < this.columnsToEdit.length; i++) {
+            columnsToEdit += columnNames.get(this.columnsToEdit[i]) + Command.SEPARATOR;
         }
 
         for (int i = 0; i < records.size(); i++) {
@@ -93,10 +81,9 @@ public class TempTable {
     }
 
     public void clearTable(){
-        columnsNameList = null;
-        columnsToEditIdx = null;
-        columnsNameWithIdx = null;
-        columnCount = 0;
+        columnNames = null;
+        columnsToEdit = null;
+        columnQuantity = 0;
         records = null;
     }
 

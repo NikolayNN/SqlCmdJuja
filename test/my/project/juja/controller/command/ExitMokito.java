@@ -1,7 +1,7 @@
 package my.project.juja.controller.command;
 
 import my.project.juja.controller.commands.Command;
-import my.project.juja.controller.commands.CommandExit;
+import my.project.juja.controller.commands.Exit;
 import my.project.juja.model.Storeable;
 import my.project.juja.view.View;
 import org.junit.Before;
@@ -13,13 +13,12 @@ import java.sql.Connection;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.atLeast;
-import static org.mockito.Mockito.atLeastOnce;
 import static org.mockito.Mockito.verify;
 
 /**
  * Created by Nikol on 5/3/2016.
  */
-public class CommandExitMokitoTest {
+public class ExitMokito {
     private Storeable store;
     private View view;
     private Connection connection;
@@ -34,7 +33,7 @@ public class CommandExitMokitoTest {
     @Test
     public void test(){
         //given
-        Command command = new CommandExit(store, view);
+        Command command = new Exit(store, view);
         Mockito.when(store.getConnection()).thenReturn(connection);
         //when
         command.perform();
