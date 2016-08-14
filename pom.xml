@@ -39,20 +39,44 @@
             <artifactId>mockito-all</artifactId>
             <version>1.9.5</version>
         </dependency>
+
+        <dependency>
+            <groupId>com.google.api-client</groupId>
+            <artifactId>google-api-client</artifactId>
+            <version>1.22.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.google.oauth-client</groupId>
+            <artifactId>google-oauth-client-jetty</artifactId>
+            <version>1.22.0</version>
+        </dependency>
+
+
+        <dependency>
+            <groupId>com.google.apis</groupId>
+            <artifactId>google-api-services-sheets</artifactId>
+            <version>v4-rev15-1.22.0</version>
+        </dependency>
+
+
     </dependencies>
+
+
+
 
     <build>
         <finalName>${project.artifactId}</finalName>
         <resources>
             <resource>
-                <directory>src/main/java</directory>
+                <directory>src/main/java/main/java</directory>
                 <filtering>true</filtering>
                 <excludes>
                     <exclude>**/*.java</exclude>
                 </excludes>
             </resource>
             <resource>
-                <directory>src/main/resources</directory>
+                <directory>src/main/java/main/resources</directory>
                 <filtering>true</filtering>
             </resource>
         </resources>

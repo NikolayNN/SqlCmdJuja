@@ -59,8 +59,12 @@ public class DataBase {
             ResultSetMetaData rsmd = rs.getMetaData();
             while (rs.next()) {
                 String record = "";
+
                 for (int i = 1; i <= rsmd.getColumnCount(); i++) {
-                    record += (rs.getString(i).trim() + "|");
+
+                    if (rs.getString(i) != null){
+                        record += (rs.getString(i).trim() + "|");
+                    }
                 }
                 result.add(record);
             }

@@ -1,0 +1,11 @@
+Navitech-36fb8c591742.json
+
+service account key
+36fb8c59174223e14c31cb79f701cc8f32ac34b1
+
+api key
+AIzaSyDiSd50PlsqY1rTs6o4eEsZ9hEeQ9LjvWg
+
+client id
+488371092245-gaf3kcuj33buat77vq3pi2qs872utql3.apps.googleusercontent.com
+oUdRyyTXw3Z23NI1DjbGvy0l

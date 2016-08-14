@@ -9,40 +9,47 @@ import java.util.List;
  */
 public class Sensor {
     long id;
-    List<DataSet> dataSets;
+    List<DataSet> sensorData;
 
-    public long getId() {
-        return id;
-    }
-
-    public List<DataSet> getDataSets() {
-        return dataSets;
-    }
-
-    public Sensor(long id, DataBase dataBase) {
+    public Sensor(long id) {
         this.id = id;
-        this.dataSets = createDataSetList(dataBase);
     }
 
-    private List<DataSet> createDataSetList(DataBase dataBase){
-        dataBase.getConnection();
-        List<String> sourceLines = dataBase.getTableData();
-        dataBase.closeConnection();
+    public List<DataSet> getSensorData() {
+        return sensorData;
+    }
+
+    public void setSensorData(DataBase dataBase){
+        List<String> sourceLines = readSourceLinesFromDataBase(dataBase);
+
         List<DataSet> dataSets = new ArrayList<>();
         for (String sourceLine : sourceLines) {
             DataSet dataSet = createDataSet(sourceLine);
             dataSets.add(dataSet);
         }
-        return check(dataSets);
+        sensorData = check(dataSets);
+    }
+
+    private List<String> readSourceLinesFromDataBase(DataBase dataBase){
+        dataBase.getConnection();
+        List<String> sourceLines = dataBase.getTableData();
+        dataBase.closeConnection();
+        return sourceLines;
     }
 
     private DataSet createDataSet(String source) {
         String[] columns = source.split("\\|");
+
         long id = Long.parseLong(columns[0]);
         long ms = Long.parseLong(columns[1]) * 1000;
         Date date = new Date(ms);
-        String params = columns[2];
-        int sensorValue = findParamValue("CNT2", params);
+        int sensorValue;
+        if(columns.length == 3) {
+            String params = columns[2];
+            sensorValue = findParamValue("CNT2", params);
+        }else{
+            sensorValue = 0;
+        }
         return new DataSet(date, sensorValue);
     }
 
@@ -55,7 +62,7 @@ public class Sensor {
                 return paramValue;
             }
         }
-        return -1;
+        return 0; // if can't found paramkey return 0
     }
 
     private String[] splitParams(String params) {

@@ -9,15 +9,16 @@ import java.util.List;
 public class User {
     String name;
     List<Device> devices;
-    DataBase dataBase;
 
-    public User(String name, List<Long> idList, DataBase dataBase) {
-        this.dataBase = dataBase;
+    public User(String name) {
         this.name = name;
-        devices = new ArrayList<>();
-        for (int i = 0; i < idList.size(); i++) {
-            devices.add(new Device(idList.get(i), dataBase));
+    }
+
+    public void addDevice(long id){
+        if(devices == null){
+            devices = new ArrayList<>();
         }
+        devices.add(new Device(id));
     }
 
     public String getName() {

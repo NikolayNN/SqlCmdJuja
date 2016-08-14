@@ -24,7 +24,7 @@ public class DataSet {
 
     @Override
     public String toString() {
-        return "DataSet{" +
+        return "{" +
                 "date=" + date +
                 ", value=" + value +
                 '}';

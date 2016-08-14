@@ -8,13 +8,12 @@ import java.util.List;
 public class Device {
     Sensor sensor;
     long id;
-    DataBase dataBase;
 
-    public Device(long id, DataBase dataBase) {
+    public Device(long id) {
         this.id = id;
-        this.sensor = new Sensor(id, dataBase);
+        sensor = new Sensor(id);
     }
-
+    
     public Sensor getSensor() {
         return sensor;
     }
