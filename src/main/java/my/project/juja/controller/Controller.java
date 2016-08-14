@@ -2,8 +2,10 @@ package my.project.juja.controller;
 
 import my.project.juja.model.*;
 import my.project.juja.view.Console;
+import my.project.juja.view.GoogleSheet;
 import my.project.juja.view.View;
 
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -24,8 +26,17 @@ public class Controller {
         for (Device device : devices){
             Sensor sensor = device.getSensor();
             List<DataSet> sensorData = sensor.getSensorData();
+
+            GoogleSheet googleSheet = new GoogleSheet();
+            int row = 0;
             for (DataSet dataSet : sensorData) {
-                view.writeln(dataSet.toString());
+                try {
+                    googleSheet.writeDouble(dataSet.getValue(), 0, row);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                row++;
+
             }
         }
 

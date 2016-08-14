@@ -51,6 +51,8 @@ public class GoogleSheet {
     private static final List<String> SCOPES =
             Arrays.asList(SheetsScopes.SPREADSHEETS);
 
+    private static Sheets SERVICE;
+
     static {
         try {
             HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
@@ -59,6 +61,7 @@ public class GoogleSheet {
             t.printStackTrace();
             System.exit(1);
         }
+
     }
 
     /**
@@ -66,7 +69,7 @@ public class GoogleSheet {
      * @return an authorized Credential object.
      * @throws IOException
      */
-    private static Credential authorize() throws IOException {
+    private Credential authorize() throws IOException {
         // Load client secrets.
         InputStream in =
                 GoogleSheet.class.getResourceAsStream("/client_secret.json");
@@ -92,17 +95,20 @@ public class GoogleSheet {
      * @return an authorized Sheets API client service
      * @throws IOException
      */
-    private static Sheets getSheetsService() throws IOException {
+    private Sheets getSheetsService() throws IOException {
         Credential credential = authorize();
         return new Sheets.Builder(HTTP_TRANSPORT, JSON_FACTORY, credential)
                 .setApplicationName(APPLICATION_NAME)
                 .build();
     }
 
-    public static void writeDouble(double value, int rowIndex, int columnIndex) throws IOException {
+    public void writeDouble(double value, int rowIndex, int columnIndex) throws IOException {
         List<Request> requests = new ArrayList<>();
-        // Build a new authorized API client service.
-        Sheets service = getSheetsService();
+
+        if (SERVICE == null){
+            SERVICE = getSheetsService();
+        }
+
         String spreadsheetId = "1abP8DvJDeMrkNyTCpdO_zs6w16_AOCBWuJaHEDWZVtA";
 
         List<CellData> values = new ArrayList<>();
@@ -122,7 +128,7 @@ public class GoogleSheet {
 
         BatchUpdateSpreadsheetRequest batchUpdateRequest = new BatchUpdateSpreadsheetRequest()
                 .setRequests(requests);
-        service.spreadsheets().batchUpdate(spreadsheetId, batchUpdateRequest)
+        SERVICE.spreadsheets().batchUpdate(spreadsheetId, batchUpdateRequest)
                 .execute();
     }
 

@@ -1,6 +1,7 @@
 package my.project.juja.model;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
@@ -27,6 +28,7 @@ public class Sensor {
             DataSet dataSet = createDataSet(sourceLine);
             dataSets.add(dataSet);
         }
+        sort(dataSets);
         sensorData = check(dataSets);
     }
 
@@ -74,7 +76,7 @@ public class Sensor {
     private List<DataSet> check(List<DataSet> dataSets) {
         DataSet previos = dataSets.get(0);
         DataSet current;
-        int offset = 0;
+        float offset = 0;
         for (int i = 0; i < dataSets.size(); i++) {
             current = dataSets.get(i);
             if (previos.getValue() > current.getValue()) {
@@ -84,6 +86,17 @@ public class Sensor {
             previos = current;
         }
         return dataSets;
+    }
+
+    private void sort(List<DataSet> list) {
+        list.sort(new Comparator<DataSet>() {
+            @Override
+            public int compare(DataSet o1, DataSet o2) {
+                Date date1 = o1.getDate();
+                Date date2 = o2.getDate();
+                return date1.compareTo(date2);
+            }
+        });
     }
 
 

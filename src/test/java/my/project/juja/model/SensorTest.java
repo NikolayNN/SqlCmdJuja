@@ -1,4 +1,4 @@
-package java.my.project.juja.model;
+package my.project.juja.model;
 
 
 import my.project.juja.model.DataBase;
@@ -18,7 +18,7 @@ import static org.junit.Assert.assertEquals;
  */
 public class SensorTest  {
     DataBase dataBase;
-    Sensor sensor;
+
 
     @Before
     public void setup(){
@@ -37,9 +37,9 @@ public class SensorTest  {
         Mockito.when(dataBase.getTableData()).thenReturn(given);
         sensor.setSensorData(dataBase);
 
-        String expected =   "{date=Fri Jul 22 11:15:01 MSK 2016, value=54}" + "\n" +
-                "{date=Fri Jul 22 11:16:41 MSK 2016, value=64}" + "\n" +
-                "{date=Fri Jul 22 11:18:21 MSK 2016, value=70}" + "\n";
+        String expected =   "{date=Fri Jul 22 11:15:01 MSK 2016, value=54.0}" + "\n" +
+                            "{date=Fri Jul 22 11:16:41 MSK 2016, value=64.0}" + "\n" +
+                            "{date=Fri Jul 22 11:18:21 MSK 2016, value=70.0}" + "\n";
 
         //when
         List<DataSet> sensordata = sensor.getSensorData();
@@ -62,9 +62,9 @@ public class SensorTest  {
         Mockito.when(dataBase.getTableData()).thenReturn(given);
         sensor.setSensorData(dataBase);
 
-        String expected =   "{date=Fri Jul 22 11:15:01 MSK 2016, value=0}" + "\n" +
-                            "{date=Fri Jul 22 11:16:41 MSK 2016, value=64}" + "\n" +
-                            "{date=Fri Jul 22 11:18:21 MSK 2016, value=70}" + "\n";
+        String expected =   "{date=Fri Jul 22 11:15:01 MSK 2016, value=0.0}" + "\n" +
+                            "{date=Fri Jul 22 11:16:41 MSK 2016, value=64.0}" + "\n" +
+                            "{date=Fri Jul 22 11:18:21 MSK 2016, value=70.0}" + "\n";
 
         //when
         List<DataSet> sensordata = sensor.getSensorData();
@@ -87,9 +87,9 @@ public class SensorTest  {
         Mockito.when(dataBase.getTableData()).thenReturn(given);
         sensor.setSensorData(dataBase);
 
-        String expected =   "{date=Fri Jul 22 11:15:01 MSK 2016, value=54}" + "\n" +
-                            "{date=Fri Jul 22 11:16:41 MSK 2016, value=54}" + "\n" +
-                            "{date=Fri Jul 22 11:18:21 MSK 2016, value=124}" + "\n";
+        String expected =   "{date=Fri Jul 22 11:15:01 MSK 2016, value=54.0}" + "\n" +
+                            "{date=Fri Jul 22 11:16:41 MSK 2016, value=54.0}" + "\n" +
+                            "{date=Fri Jul 22 11:18:21 MSK 2016, value=124.0}" + "\n";
 
         //when
         List<DataSet> sensordata = sensor.getSensorData();
@@ -112,9 +112,9 @@ public class SensorTest  {
         Mockito.when(dataBase.getTableData()).thenReturn(given);
         sensor.setSensorData(dataBase);
 
-        String expected =   "{date=Fri Jul 22 11:15:01 MSK 2016, value=54}" + "\n" +
-                            "{date=Fri Jul 22 11:16:41 MSK 2016, value=64}" + "\n" +
-                            "{date=Fri Jul 22 11:18:21 MSK 2016, value=64}" + "\n";
+        String expected =   "{date=Fri Jul 22 11:15:01 MSK 2016, value=54.0}" + "\n" +
+                            "{date=Fri Jul 22 11:16:41 MSK 2016, value=64.0}" + "\n" +
+                            "{date=Fri Jul 22 11:18:21 MSK 2016, value=64.0}" + "\n";
 
         //when
         List<DataSet> sensordata = sensor.getSensorData();
@@ -137,9 +137,9 @@ public class SensorTest  {
         Mockito.when(dataBase.getTableData()).thenReturn(given);
         sensor.setSensorData(dataBase);
 
-        String expected =   "{date=Fri Jul 22 11:15:01 MSK 2016, value=0}" + "\n" +
-                            "{date=Fri Jul 22 11:16:41 MSK 2016, value=64}" + "\n" +
-                            "{date=Fri Jul 22 11:18:21 MSK 2016, value=74}" + "\n";
+        String expected =   "{date=Fri Jul 22 11:15:01 MSK 2016, value=0.0}" + "\n" +
+                            "{date=Fri Jul 22 11:16:41 MSK 2016, value=64.0}" + "\n" +
+                            "{date=Fri Jul 22 11:18:21 MSK 2016, value=74.0}" + "\n";
 
         //when
         List<DataSet> sensordata = sensor.getSensorData();
@@ -162,9 +162,9 @@ public class SensorTest  {
         Mockito.when(dataBase.getTableData()).thenReturn(given);
         sensor.setSensorData(dataBase);
 
-        String expected =   "{date=Fri Jul 22 11:15:01 MSK 2016, value=0}" + "\n" +
-                "{date=Fri Jul 22 11:16:41 MSK 2016, value=64}" + "\n" +
-                "{date=Fri Jul 22 11:18:21 MSK 2016, value=74}" + "\n";
+        String expected =   "{date=Fri Jul 22 11:15:01 MSK 2016, value=0.0}" + "\n" +
+                "{date=Fri Jul 22 11:16:41 MSK 2016, value=64.0}" + "\n" +
+                "{date=Fri Jul 22 11:18:21 MSK 2016, value=74.0}" + "\n";
 
         //when
         List<DataSet> sensordata = sensor.getSensorData();
@@ -187,9 +187,9 @@ public class SensorTest  {
         Mockito.when(dataBase.getTableData()).thenReturn(given);
         sensor.setSensorData(dataBase);
 
-        String expected =   "{date=Fri Jul 22 11:15:01 MSK 2016, value=54}" + "\n" +
-                "{date=Fri Jul 22 11:16:41 MSK 2016, value=74}" + "\n" +
-                "{date=Fri Jul 22 11:18:21 MSK 2016, value=74}" + "\n";
+        String expected =   "{date=Fri Jul 22 11:15:01 MSK 2016, value=54.0}" + "\n" +
+                "{date=Fri Jul 22 11:16:41 MSK 2016, value=74.0}" + "\n" +
+                "{date=Fri Jul 22 11:18:21 MSK 2016, value=74.0}" + "\n";
 
         //when
         List<DataSet> sensordata = sensor.getSensorData();
@@ -212,9 +212,9 @@ public class SensorTest  {
         Mockito.when(dataBase.getTableData()).thenReturn(given);
         sensor.setSensorData(dataBase);
 
-        String expected =   "{date=Fri Jul 22 11:15:01 MSK 2016, value=54}" + "\n" +
-                "{date=Fri Jul 22 11:16:41 MSK 2016, value=54}" + "\n" +
-                "{date=Fri Jul 22 11:18:21 MSK 2016, value=128}" + "\n";
+        String expected =   "{date=Fri Jul 22 11:15:01 MSK 2016, value=54.0}" + "\n" +
+                "{date=Fri Jul 22 11:16:41 MSK 2016, value=54.0}" + "\n" +
+                "{date=Fri Jul 22 11:18:21 MSK 2016, value=128.0}" + "\n";
 
         //when
         List<DataSet> sensordata = sensor.getSensorData();
@@ -237,9 +237,9 @@ public class SensorTest  {
         Mockito.when(dataBase.getTableData()).thenReturn(given);
         sensor.setSensorData(dataBase);
 
-        String expected =   "{date=Fri Jul 22 11:15:01 MSK 2016, value=54}" + "\n" +
-                "{date=Fri Jul 22 11:16:41 MSK 2016, value=54}" + "\n" +
-                "{date=Fri Jul 22 11:18:21 MSK 2016, value=59}" + "\n";
+        String expected =   "{date=Fri Jul 22 11:15:01 MSK 2016, value=54.0}" + "\n" +
+                "{date=Fri Jul 22 11:16:41 MSK 2016, value=54.0}" + "\n" +
+                "{date=Fri Jul 22 11:18:21 MSK 2016, value=59.0}" + "\n";
 
         //when
         List<DataSet> sensordata = sensor.getSensorData();
@@ -260,7 +260,7 @@ public class SensorTest  {
         Mockito.when(dataBase.getTableData()).thenReturn(given);
         sensor.setSensorData(dataBase);
 
-        String expected =   "{date=Fri Jul 22 11:15:01 MSK 2016, value=0}" + "\n";
+        String expected =   "{date=Fri Jul 22 11:15:01 MSK 2016, value=0.0}" + "\n";
 
         //when
         List<DataSet> sensordata = sensor.getSensorData();
@@ -282,8 +282,8 @@ public class SensorTest  {
         Mockito.when(dataBase.getTableData()).thenReturn(given);
         sensor.setSensorData(dataBase);
 
-        String expected =   "{date=Fri Jul 22 11:15:01 MSK 2016, value=0}" + "\n" +
-                            "{date=Fri Jul 22 11:16:41 MSK 2016, value=0}" + "\n";
+        String expected =   "{date=Fri Jul 22 11:15:01 MSK 2016, value=0.0}" + "\n" +
+                            "{date=Fri Jul 22 11:16:41 MSK 2016, value=0.0}" + "\n";
 
         //when
         List<DataSet> sensordata = sensor.getSensorData();
@@ -306,9 +306,9 @@ public class SensorTest  {
         Mockito.when(dataBase.getTableData()).thenReturn(given);
         sensor.setSensorData(dataBase);
 
-        String expected =   "{date=Fri Jul 22 11:15:01 MSK 2016, value=0}" + "\n" +
-                            "{date=Fri Jul 22 11:16:41 MSK 2016, value=0}" + "\n" +
-                            "{date=Fri Jul 22 11:18:21 MSK 2016, value=0}" + "\n";
+        String expected =   "{date=Fri Jul 22 11:15:01 MSK 2016, value=0.0}" + "\n" +
+                            "{date=Fri Jul 22 11:16:41 MSK 2016, value=0.0}" + "\n" +
+                            "{date=Fri Jul 22 11:18:21 MSK 2016, value=0.0}" + "\n";
 
         //when
         List<DataSet> sensordata = sensor.getSensorData();
@@ -331,9 +331,9 @@ public class SensorTest  {
         Mockito.when(dataBase.getTableData()).thenReturn(given);
         sensor.setSensorData(dataBase);
 
-        String expected =   "{date=Fri Jul 22 11:15:01 MSK 2016, value=0}" + "\n" +
-                "{date=Fri Jul 22 11:16:41 MSK 2016, value=0}" + "\n" +
-                "{date=Fri Jul 22 11:18:21 MSK 2016, value=5}" + "\n";
+        String expected =   "{date=Fri Jul 22 11:15:01 MSK 2016, value=0.0}" + "\n" +
+                "{date=Fri Jul 22 11:16:41 MSK 2016, value=0.0}" + "\n" +
+                "{date=Fri Jul 22 11:18:21 MSK 2016, value=5.0}" + "\n";
 
         //when
         List<DataSet> sensordata = sensor.getSensorData();

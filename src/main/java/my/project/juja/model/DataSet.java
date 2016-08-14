@@ -7,18 +7,22 @@ import java.util.Date;
  */
 public class DataSet {
     Date date;
-    int value;
+    float value;
 
-    public DataSet(Date date, int value) {
+    public Date getDate() {
+        return date;
+    }
+
+    public DataSet(Date date, float value) {
         this.date = date;
         this.value = value;
     }
 
-    public int getValue() {
+    public float getValue() {
         return value;
     }
 
-    public void setValue(int value) {
+    public void setValue(float value) {
         this.value = value;
     }
 
