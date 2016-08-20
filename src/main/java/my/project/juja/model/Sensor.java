@@ -1,5 +1,8 @@
 package my.project.juja.model;
 
+import my.project.juja.utilits.Counter;
+import my.project.juja.utilits.Filter;
+
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Date;
@@ -20,21 +23,21 @@ public class Sensor {
         return sensorData;
     }
 
-    public void setSensorData(DataBase dataBase){
+    public void setSensorData(DataBase dataBase) {
         List<String> sourceLines = readSourceLinesFromDataBase(dataBase);
 
         List<DataSet> dataSets = new ArrayList<>();
         for (String sourceLine : sourceLines) {
-            DataSet dataSet = createDataSet(sourceLine);
-            dataSets.add(dataSet);
+                DataSet dataSet = createDataSet(sourceLine);
+                dataSets.add(dataSet);
         }
-        sort(dataSets);
-        sensorData = check(dataSets);
+        sensorData = Filter.execute(dataSets);
+        sensorData = Counter.makeCounter(dataSets);
     }
 
-    private List<String> readSourceLinesFromDataBase(DataBase dataBase){
+    private List<String> readSourceLinesFromDataBase(DataBase dataBase) {
         dataBase.getConnection();
-        List<String> sourceLines = dataBase.getTableData();
+        List<String> sourceLines = dataBase.getTableData(id);
         dataBase.closeConnection();
         return sourceLines;
     }
@@ -46,11 +49,12 @@ public class Sensor {
         long ms = Long.parseLong(columns[1]) * 1000;
         Date date = new Date(ms);
         int sensorValue;
-        if(columns.length == 3) {
-            String params = columns[2];
+        String params ="";
+        if (columns.length == 3) {
+            params = columns[2];
             sensorValue = findParamValue("CNT2", params);
-        }else{
-            sensorValue = 0;
+        } else {
+           sensorValue = 0;
         }
         return new DataSet(date, sensorValue);
     }
@@ -64,7 +68,7 @@ public class Sensor {
                 return paramValue;
             }
         }
-        return 0; // if can't found paramkey return 0
+        return 0;
     }
 
     private String[] splitParams(String params) {
@@ -72,33 +76,7 @@ public class Sensor {
         paramsArray = params.split(";");
         return paramsArray;
     }
-
-    private List<DataSet> check(List<DataSet> dataSets) {
-        DataSet previos = dataSets.get(0);
-        DataSet current;
-        float offset = 0;
-        for (int i = 0; i < dataSets.size(); i++) {
-            current = dataSets.get(i);
-            if (previos.getValue() > current.getValue()) {
-                offset = previos.getValue();
-            }
-            current.setValue(offset + current.getValue());
-            previos = current;
-        }
-        return dataSets;
-    }
-
-    private void sort(List<DataSet> list) {
-        list.sort(new Comparator<DataSet>() {
-            @Override
-            public int compare(DataSet o1, DataSet o2) {
-                Date date1 = o1.getDate();
-                Date date2 = o2.getDate();
-                return date1.compareTo(date2);
-            }
-        });
-    }
-
-
-
 }
+
+
+

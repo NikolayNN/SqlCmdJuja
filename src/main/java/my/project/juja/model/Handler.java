@@ -25,6 +25,14 @@ public class Handler {
         setSplitedDataByDay();
         processedData = new ArrayList<>();
         List<DataSet> dailyValues;
+/////++++++++++++++++++
+             List<DataSet> data = splitedDataByDay.get(3);
+        for (DataSet dataSet : data) {
+            System.out.println(dataSet);
+        }
+
+////++++++++++++++++++++++++
+
         for (int i = 0; i < splitedDataByDay.size(); i++) {
             dailyValues = splitedDataByDay.get(i);
             Date day = dailyValues.get(0).getDate();

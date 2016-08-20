@@ -50,10 +50,11 @@ public class DataBase {
 
 
 
-    public List<String> getTableData(){
+    public List<String> getTableData(long id){
         checkConnection();
         List<String> result = new ArrayList<>();
-        String query = "SELECT * FROM " + tableName;
+        String query = "SELECT * FROM " + tableName + " WHERE id = " + id;
+        System.out.println(query);
         try(Statement stmt = connection.createStatement();
             ResultSet rs = stmt.executeQuery(query)) {
             ResultSetMetaData rsmd = rs.getMetaData();

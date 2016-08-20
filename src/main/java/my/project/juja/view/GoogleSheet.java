@@ -132,5 +132,35 @@ public class GoogleSheet {
                 .execute();
     }
 
+    public void writeString(String value, int rowIndex, int columnIndex) throws IOException {
+        List<Request> requests = new ArrayList<>();
+
+        if (SERVICE == null){
+            SERVICE = getSheetsService();
+        }
+
+        String spreadsheetId = "1abP8DvJDeMrkNyTCpdO_zs6w16_AOCBWuJaHEDWZVtA";
+
+        List<CellData> values = new ArrayList<>();
+        values.add(new CellData()
+                .setUserEnteredValue(new ExtendedValue()
+                        .setStringValue(value)));
+
+        requests.add(new Request()
+                .setUpdateCells(new UpdateCellsRequest()
+                        .setStart(new GridCoordinate()
+                                .setSheetId(0)
+                                .setRowIndex(rowIndex)     //строка
+                                .setColumnIndex(columnIndex)) // столбец
+                        .setRows(Arrays.asList(
+                                new RowData().setValues(values)))
+                        .setFields("userEnteredValue,userEnteredFormat.backgroundColor")));
+
+        BatchUpdateSpreadsheetRequest batchUpdateRequest = new BatchUpdateSpreadsheetRequest()
+                .setRequests(requests);
+        SERVICE.spreadsheets().batchUpdate(spreadsheetId, batchUpdateRequest)
+                .execute();
+    }
+
 
 }

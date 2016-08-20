@@ -30,7 +30,7 @@ public class HandlerTest  {
         given.add("353386062153982|1469175301|CSQ1:87;NSQ1:5;NSQ2:1;CNT1:54;CNT2:2000;BAT1:25;PWR1:28|");
         given.add("353386062153982|1469175401|CSQ1:87;NSQ1:5;NSQ2:1;CNT1:54;CNT2:3000;BAT1:25;PWR1:28|");
         given.add("353386062153982|1469175501|CSQ1:87;NSQ1:5;NSQ2:1;CNT1:54;CNT2:4000;BAT1:25;PWR1:28|");
-        Mockito.when(dataBase.getTableData()).thenReturn(given);
+        Mockito.when(dataBase.getTableData(353386062153982l)).thenReturn(given);
         sensor.setSensorData(dataBase);
         Handler handler = new Handler(sensor.getSensorData(), 200);
 
@@ -56,12 +56,12 @@ public class HandlerTest  {
         given.add("353386062153982|1474359201|CSQ1:87;NSQ1:5;NSQ2:1;CNT1:54;CNT2:0;BAT1:25;PWR1:28|");
         given.add("353386062153982|1474359301|CSQ1:87;NSQ1:5;NSQ2:1;CNT1:54;CNT2:1000;BAT1:25;PWR1:28|");
         given.add("353386062153982|1474359401|CSQ1:87;NSQ1:5;NSQ2:1;CNT1:54;CNT2:2000;BAT1:25;PWR1:28|");
-        Mockito.when(dataBase.getTableData()).thenReturn(given);
+        Mockito.when(dataBase.getTableData(353386062153982l)).thenReturn(given);
         sensor.setSensorData(dataBase);
         Handler handler = new Handler(sensor.getSensorData(), 200);
 
         String expected = "{date=" + new Date(1469175101000l).toString() + ", value=20.0}" + "\n" +
-                          "{date=" + new Date(1474359201000l).toString() + ", value=15.0}" + "\n";
+                          "{date=" + new Date(1474359201000l).toString() + ", value=10.0}" + "\n";
         //when
         handler.process();
         //then
@@ -88,12 +88,12 @@ public class HandlerTest  {
         given.add("353386062153982|1469175301|CSQ1:87;NSQ1:5;NSQ2:1;CNT1:54;CNT2:2000;BAT1:25;PWR1:28|");
         given.add("353386062153982|1469175401|CSQ1:87;NSQ1:5;NSQ2:1;CNT1:54;CNT2:3000;BAT1:25;PWR1:28|");
         given.add("353386062153982|1469175501|CSQ1:87;NSQ1:5;NSQ2:1;CNT1:54;CNT2:4000;BAT1:25;PWR1:28|");
-        Mockito.when(dataBase.getTableData()).thenReturn(given);
+        Mockito.when(dataBase.getTableData(353386062153982l)).thenReturn(given);
         sensor.setSensorData(dataBase);
         Handler handler = new Handler(sensor.getSensorData(), 200);
 
         String expected = "{date=" + new Date(1469175101000l).toString() + ", value=20.0}" + "\n" +
-                "{date=" + new Date(1474359201000l).toString() + ", value=15.0}" + "\n";
+                "{date=" + new Date(1474359201000l).toString() + ", value=10.0}" + "\n";
         //when
         handler.process();
         //then
@@ -120,12 +120,12 @@ public class HandlerTest  {
         given.add("353386062153982|1474359401|CSQ1:87;NSQ1:5;NSQ2:1;CNT1:54;CNT2:2000;BAT1:25;PWR1:28|");
         given.add("353386062153982|1469175401|CSQ1:87;NSQ1:5;NSQ2:1;CNT1:54;CNT2:3000;BAT1:25;PWR1:28|");
         given.add("353386062153982|1469175501|CSQ1:87;NSQ1:5;NSQ2:1;CNT1:54;CNT2:4000;BAT1:25;PWR1:28|");
-        Mockito.when(dataBase.getTableData()).thenReturn(given);
+        Mockito.when(dataBase.getTableData(353386062153982l)).thenReturn(given);
         sensor.setSensorData(dataBase);
         Handler handler = new Handler(sensor.getSensorData(), 200);
 
         String expected = "{date=" + new Date(1469175101000l).toString() + ", value=20.0}" + "\n" +
-                "{date=" + new Date(1474359201000l).toString() + ", value=15.0}" + "\n";
+                "{date=" + new Date(1474359201000l).toString() + ", value=10.0}" + "\n";
         //when
         handler.process();
         //then
@@ -147,7 +147,7 @@ public class HandlerTest  {
         given.add("353386062153982|1469175301|DIN2:0");
         given.add("353386062153982|1469175401|CSQ1:87;NSQ1:5;NSQ2:1;CNT1:54;CNT2:3000;BAT1:25;PWR1:28|");
         given.add("353386062153982|1469175501|CSQ1:87;NSQ1:5;NSQ2:1;CNT1:54;CNT2:4000;BAT1:25;PWR1:28|");
-        Mockito.when(dataBase.getTableData()).thenReturn(given);
+        Mockito.when(dataBase.getTableData(353386062153982l)).thenReturn(given);
         sensor.setSensorData(dataBase);
         Handler handler = new Handler(sensor.getSensorData(), 200);
 
@@ -158,7 +158,4 @@ public class HandlerTest  {
         String result = handler.getProcessedData().toString();
         assertEquals(expected, result);
     }
-
-
-
 }

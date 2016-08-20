@@ -26,16 +26,21 @@ public class Controller {
         for (Device device : devices){
             Sensor sensor = device.getSensor();
             List<DataSet> sensorData = sensor.getSensorData();
+            Handler handler = new Handler(sensorData, 200);
+            handler.process();
+            List<DataSet> sensorDataDaily = handler.getProcessedData();
 
             GoogleSheet googleSheet = new GoogleSheet();
-            int row = 0;
-            for (DataSet dataSet : sensorData) {
+            int column = 0;
+            for (DataSet dataSet : sensorDataDaily) {
                 try {
-                    googleSheet.writeDouble(dataSet.getValue(), 0, row);
+                    googleSheet.writeDouble(dataSet.getValue(), column, 0);
+                    String date = dataSet.getDate().getDate() + "." + dataSet.getDate().getMonth();
+                    googleSheet.writeString(date, column, 1);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-                row++;
+                column++;
 
             }
         }

@@ -9,6 +9,7 @@ import org.junit.Test;
 import org.mockito.Mockito;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
@@ -25,21 +26,28 @@ public class SensorTest  {
         dataBase = Mockito.mock(DataBase.class);
     }
 
-
     @Test
-     public void test(){
+    public void test01(){
         //given
         Sensor sensor = new Sensor(353386062153982l);
         List<String> given = new ArrayList<>();
-        given.add("353386062153982|1469175301|CSQ1:87;NSQ1:5;NSQ2:1;CNT1:54;CNT2:54;BAT1:25;PWR1:28|");
-        given.add("353386062153982|1469175401|CSQ1:87;NSQ1:5;NSQ2:1;CNT1:54;CNT2:64;BAT1:25;PWR1:28|");
-        given.add("353386062153982|1469175501|CSQ1:87;NSQ1:5;NSQ2:1;CNT1:54;CNT2:70;BAT1:25;PWR1:28|");
-        Mockito.when(dataBase.getTableData()).thenReturn(given);
+        given.add("353386062153982|1469175101|CSQ1:87;NSQ1:5;NSQ2:1;CNT1:54;CNT2:1000;BAT1:25;PWR1:28|");
+        given.add("353386062153982|1469175201|CSQ1:87;NSQ1:5;NSQ2:1;CNT1:54;CNT2:2000;BAT1:25;PWR1:28|");
+        given.add("353386062153982|1469175301|CSQ1:87;NSQ1:5;NSQ2:1;CNT1:54;CNT2:3000;BAT1:25;PWR1:28|");
+        given.add("353386062153982|1469175401|CSQ1:87;NSQ1:5;NSQ2:1;CNT1:54;CNT2:4000;BAT1:25;PWR1:28|");
+        given.add("353386062153982|1469175501|CSQ1:87;NSQ1:5;NSQ2:1;CNT1:54;CNT2:5000;BAT1:25;PWR1:28|");
+        given.add("353386062153982|1469175601|CSQ1:87;NSQ1:5;NSQ2:1;CNT1:54;CNT2:4500;BAT1:25;PWR1:28|");
+        given.add("353386062153982|1469175701|CSQ1:87;NSQ1:5;NSQ2:1;CNT1:54;CNT2:5000;BAT1:25;PWR1:28|");
+
+        Mockito.when(dataBase.getTableData(353386062153982l)).thenReturn(given);
         sensor.setSensorData(dataBase);
 
-        String expected =   "{date=Fri Jul 22 11:15:01 MSK 2016, value=54.0}" + "\n" +
-                            "{date=Fri Jul 22 11:16:41 MSK 2016, value=64.0}" + "\n" +
-                            "{date=Fri Jul 22 11:18:21 MSK 2016, value=70.0}" + "\n";
+        String expected =   "{date=" + new Date(1469175101000l) + ", value=1000.0}" + "\n" +
+                "{date=" + new Date(1469175201000l) + ", value=2000.0}" + "\n" +
+                "{date=" + new Date(1469175301000l) + ", value=3000.0}" + "\n" +
+                "{date=" + new Date(1469175401000l) + ", value=4000.0}" + "\n" +
+                "{date=" + new Date(1469175601000l) + ", value=4500.0}" + "\n" +
+                "{date=" + new Date(1469175701000l) + ", value=5000.0}" + "\n";
 
         //when
         List<DataSet> sensordata = sensor.getSensorData();
@@ -52,19 +60,26 @@ public class SensorTest  {
     }
 
     @Test
-    public void test2(){
+    public void test02(){
         //given
         Sensor sensor = new Sensor(353386062153982l);
         List<String> given = new ArrayList<>();
-        given.add("353386062153982|1469175301|CSQ1:87;NSQ1:5;NSQ2:1;CNT1:54;CNT2:0;BAT1:25;PWR1:28|");
-        given.add("353386062153982|1469175401|CSQ1:87;NSQ1:5;NSQ2:1;CNT1:54;CNT2:64;BAT1:25;PWR1:28|");
-        given.add("353386062153982|1469175501|CSQ1:87;NSQ1:5;NSQ2:1;CNT1:54;CNT2:70;BAT1:25;PWR1:28|");
-        Mockito.when(dataBase.getTableData()).thenReturn(given);
+        given.add("353386062153982|1469175101|CSQ1:87;NSQ1:5;NSQ2:1;CNT1:54;CNT2:0;BAT1:25;PWR1:28|");
+        given.add("353386062153982|1469175201|CSQ1:87;NSQ1:5;NSQ2:1;CNT1:54;CNT2:0;BAT1:25;PWR1:28|");
+        given.add("353386062153982|1469175301|CSQ1:87;NSQ1:5;NSQ2:1;CNT1:54;CNT2:3000;BAT1:25;PWR1:28|");
+        given.add("353386062153982|1469175401|CSQ1:87;NSQ1:5;NSQ2:1;CNT1:54;CNT2:4000;BAT1:25;PWR1:28|");
+        given.add("353386062153982|1469175501|CSQ1:87;NSQ1:5;NSQ2:1;CNT1:54;CNT2:5000;BAT1:25;PWR1:28|");
+        given.add("353386062153982|1469175601|CSQ1:87;NSQ1:5;NSQ2:1;CNT1:54;CNT2:4500;BAT1:25;PWR1:28|");
+        given.add("353386062153982|1469175701|CSQ1:87;NSQ1:5;NSQ2:1;CNT1:54;CNT2:5000;BAT1:25;PWR1:28|");
+
+        Mockito.when(dataBase.getTableData(353386062153982l)).thenReturn(given);
         sensor.setSensorData(dataBase);
 
-        String expected =   "{date=Fri Jul 22 11:15:01 MSK 2016, value=0.0}" + "\n" +
-                            "{date=Fri Jul 22 11:16:41 MSK 2016, value=64.0}" + "\n" +
-                            "{date=Fri Jul 22 11:18:21 MSK 2016, value=70.0}" + "\n";
+        String expected =
+                "{date=" + new Date(1469175301000l) + ", value=3000.0}" + "\n" +
+                "{date=" + new Date(1469175401000l) + ", value=4000.0}" + "\n" +
+                "{date=" + new Date(1469175601000l) + ", value=4500.0}" + "\n" +
+                "{date=" + new Date(1469175701000l) + ", value=5000.0}" + "\n";
 
         //when
         List<DataSet> sensordata = sensor.getSensorData();
@@ -77,44 +92,27 @@ public class SensorTest  {
     }
 
     @Test
-    public void test3(){
+    public void test03(){
         //given
         Sensor sensor = new Sensor(353386062153982l);
         List<String> given = new ArrayList<>();
-        given.add("353386062153982|1469175301|CSQ1:87;NSQ1:5;NSQ2:1;CNT1:54;CNT2:54;BAT1:25;PWR1:28|");
+        given.add("353386062153982|1469175101|CSQ1:87;NSQ1:5;NSQ2:1;CNT1:54;CNT2:0;BAT1:25;PWR1:28|");
+        given.add("353386062153982|1469175201|CSQ1:87;NSQ1:5;NSQ2:1;CNT1:54;CNT2:0;BAT1:25;PWR1:28|");
+        given.add("353386062153982|1469175301|CSQ1:87;NSQ1:5;NSQ2:1;CNT1:54;CNT2:3000;BAT1:25;PWR1:28|");
         given.add("353386062153982|1469175401|CSQ1:87;NSQ1:5;NSQ2:1;CNT1:54;CNT2:0;BAT1:25;PWR1:28|");
-        given.add("353386062153982|1469175501|CSQ1:87;NSQ1:5;NSQ2:1;CNT1:54;CNT2:70;BAT1:25;PWR1:28|");
-        Mockito.when(dataBase.getTableData()).thenReturn(given);
-        sensor.setSensorData(dataBase);
-
-        String expected =   "{date=Fri Jul 22 11:15:01 MSK 2016, value=54.0}" + "\n" +
-                            "{date=Fri Jul 22 11:16:41 MSK 2016, value=54.0}" + "\n" +
-                            "{date=Fri Jul 22 11:18:21 MSK 2016, value=124.0}" + "\n";
-
-        //when
-        List<DataSet> sensordata = sensor.getSensorData();
-        //then
-        String result = "";
-        for (DataSet dataSet : sensordata) {
-            result += dataSet.toString() + "\n";
-        }
-        assertEquals(expected, result);
-    }
-
-    @Test
-    public void test4(){
-        //given
-        Sensor sensor = new Sensor(353386062153982l);
-        List<String> given = new ArrayList<>();
-        given.add("353386062153982|1469175301|CSQ1:87;NSQ1:5;NSQ2:1;CNT1:54;CNT2:54;BAT1:25;PWR1:28|");
-        given.add("353386062153982|1469175401|CSQ1:87;NSQ1:5;NSQ2:1;CNT1:54;CNT2:64;BAT1:25;PWR1:28|");
         given.add("353386062153982|1469175501|CSQ1:87;NSQ1:5;NSQ2:1;CNT1:54;CNT2:0;BAT1:25;PWR1:28|");
-        Mockito.when(dataBase.getTableData()).thenReturn(given);
+        given.add("353386062153982|1469175601|CSQ1:87;NSQ1:5;NSQ2:1;CNT1:54;CNT2:0;BAT1:25;PWR1:28|");
+        given.add("353386062153982|1469175701|CSQ1:87;NSQ1:5;NSQ2:1;CNT1:54;CNT2:5000;BAT1:25;PWR1:28|");
+
+        Mockito.when(dataBase.getTableData(353386062153982l)).thenReturn(given);
         sensor.setSensorData(dataBase);
 
-        String expected =   "{date=Fri Jul 22 11:15:01 MSK 2016, value=54.0}" + "\n" +
-                            "{date=Fri Jul 22 11:16:41 MSK 2016, value=64.0}" + "\n" +
-                            "{date=Fri Jul 22 11:18:21 MSK 2016, value=64.0}" + "\n";
+        String expected =
+                "{date=" + new Date(1469175301000l) + ", value=3000.0}" + "\n" +
+                        "{date=" + new Date(1469175401000l) + ", value=3000.0}" + "\n" +
+                        "{date=" + new Date(1469175501000l) + ", value=3000.0}" + "\n" +
+                        "{date=" + new Date(1469175601000l) + ", value=3000.0}" + "\n" +
+                        "{date=" + new Date(1469175701000l) + ", value=5000.0}" + "\n";
 
         //when
         List<DataSet> sensordata = sensor.getSensorData();
@@ -127,19 +125,28 @@ public class SensorTest  {
     }
 
     @Test
-    public void test5(){
+    public void test04(){
         //given
         Sensor sensor = new Sensor(353386062153982l);
         List<String> given = new ArrayList<>();
-        given.add("353386062153982|1469175301|");
-        given.add("353386062153982|1469175401|CSQ1:87;NSQ1:5;NSQ2:1;CNT1:54;CNT2:64;BAT1:25;PWR1:28|");
-        given.add("353386062153982|1469175501|CSQ1:87;NSQ1:5;NSQ2:1;CNT1:54;CNT2:74;BAT1:25;PWR1:28|");
-        Mockito.when(dataBase.getTableData()).thenReturn(given);
+        given.add("353386062153982|1469175101|CSQ1:87;NSQ1:5;NSQ2:1;CNT1:54;CNT2:1000;BAT1:25;PWR1:28|");
+        given.add("353386062153982|1469175201|CSQ1:87;NSQ1:5;NSQ2:1;CNT1:54;CNT2:2000;BAT1:25;PWR1:28|");
+        given.add("353386062153982|1469175301|CSQ1:87;NSQ1:5;NSQ2:1;CNT1:54;CNT2:3000;BAT1:25;PWR1:28|");
+        given.add("353386062153982|1469175401|CSQ1:87;NSQ1:5;NSQ2:1;CNT1:54;CNT2:4000;BAT1:25;PWR1:28|");
+        given.add("353386062153982|1469175501|CSQ1:87;NSQ1:5;NSQ2:1;CNT1:54;CNT2:1000;BAT1:25;PWR1:28|");
+        given.add("353386062153982|1469175601|CSQ1:87;NSQ1:5;NSQ2:1;CNT1:54;CNT2:2000;BAT1:25;PWR1:28|");
+        given.add("353386062153982|1469175701|CSQ1:87;NSQ1:5;NSQ2:1;CNT1:54;CNT2:3000;BAT1:25;PWR1:28|");
+
+        Mockito.when(dataBase.getTableData(353386062153982l)).thenReturn(given);
         sensor.setSensorData(dataBase);
 
-        String expected =   "{date=Fri Jul 22 11:15:01 MSK 2016, value=0.0}" + "\n" +
-                            "{date=Fri Jul 22 11:16:41 MSK 2016, value=64.0}" + "\n" +
-                            "{date=Fri Jul 22 11:18:21 MSK 2016, value=74.0}" + "\n";
+        String expected =   "{date=" + new Date(1469175101000l) + ", value=1000.0}" + "\n" +
+                "{date=" + new Date(1469175201000l) + ", value=2000.0}" + "\n" +
+                "{date=" + new Date(1469175301000l) + ", value=3000.0}" + "\n" +
+                "{date=" + new Date(1469175401000l) + ", value=4000.0}" + "\n" +
+                "{date=" + new Date(1469175501000l) + ", value=5000.0}" + "\n" +
+                "{date=" + new Date(1469175601000l) + ", value=6000.0}" + "\n" +
+                "{date=" + new Date(1469175701000l) + ", value=7000.0}" + "\n";
 
         //when
         List<DataSet> sensordata = sensor.getSensorData();
@@ -152,19 +159,32 @@ public class SensorTest  {
     }
 
     @Test
-    public void test6(){
+    public void test05(){
         //given
         Sensor sensor = new Sensor(353386062153982l);
         List<String> given = new ArrayList<>();
-        given.add("353386062153982|1469175301|CSQ1:87");
-        given.add("353386062153982|1469175401|CSQ1:87;NSQ1:5;NSQ2:1;CNT1:54;CNT2:64;BAT1:25;PWR1:28|");
-        given.add("353386062153982|1469175501|CSQ1:87;NSQ1:5;NSQ2:1;CNT1:54;CNT2:74;BAT1:25;PWR1:28|");
-        Mockito.when(dataBase.getTableData()).thenReturn(given);
+        given.add("353386062153982|1469175101|CSQ1:87;NSQ1:5;NSQ2:1;CNT1:54;CNT2:1000;BAT1:25;PWR1:28|");
+        given.add("353386062153982|1469175201|CSQ1:87;NSQ1:5;NSQ2:1;CNT1:54;CNT2:2000;BAT1:25;PWR1:28|");
+        given.add("353386062153982|1469175301|CSQ1:87;NSQ1:5;NSQ2:1;CNT1:54;CNT2:3000;BAT1:25;PWR1:28|");
+        given.add("353386062153982|1469175401|CSQ1:87;NSQ1:5;NSQ2:1;CNT1:54;CNT2:4000;BAT1:25;PWR1:28|");
+        given.add("353386062153982|1469175501|CSQ1:87;NSQ1:5;NSQ2:1;CNT1:54;CNT2:1000;BAT1:25;PWR1:28|");
+        given.add("353386062153982|1469175601|CSQ1:87;NSQ1:5;NSQ2:1;CNT1:54;CNT2:2000;BAT1:25;PWR1:28|");
+        given.add("353386062153982|1469175701|CSQ1:87;NSQ1:5;NSQ2:1;CNT1:54;CNT2:3000;BAT1:25;PWR1:28|");
+        given.add("353386062153982|1469175801|CSQ1:87;NSQ1:5;NSQ2:1;CNT1:54;CNT2:1000;BAT1:25;PWR1:28|");
+        given.add("353386062153982|1469175901|CSQ1:87;NSQ1:5;NSQ2:1;CNT1:54;CNT2:2000;BAT1:25;PWR1:28|");
+
+        Mockito.when(dataBase.getTableData(353386062153982l)).thenReturn(given);
         sensor.setSensorData(dataBase);
 
-        String expected =   "{date=Fri Jul 22 11:15:01 MSK 2016, value=0.0}" + "\n" +
-                "{date=Fri Jul 22 11:16:41 MSK 2016, value=64.0}" + "\n" +
-                "{date=Fri Jul 22 11:18:21 MSK 2016, value=74.0}" + "\n";
+        String expected =   "{date=" + new Date(1469175101000l) + ", value=1000.0}" + "\n" +
+                "{date=" + new Date(1469175201000l) + ", value=2000.0}" + "\n" +
+                "{date=" + new Date(1469175301000l) + ", value=3000.0}" + "\n" +
+                "{date=" + new Date(1469175401000l) + ", value=4000.0}" + "\n" +
+                "{date=" + new Date(1469175501000l) + ", value=5000.0}" + "\n" +
+                "{date=" + new Date(1469175601000l) + ", value=6000.0}" + "\n" +
+                "{date=" + new Date(1469175701000l) + ", value=7000.0}" + "\n" +
+                "{date=" + new Date(1469175801000l) + ", value=8000.0}" + "\n" +
+                "{date=" + new Date(1469175901000l) + ", value=9000.0}" + "\n";
 
         //when
         List<DataSet> sensordata = sensor.getSensorData();
@@ -176,139 +196,32 @@ public class SensorTest  {
         assertEquals(expected, result);
     }
 
+
     @Test
-    public void test7(){
+    public void test06(){
         //given
         Sensor sensor = new Sensor(353386062153982l);
         List<String> given = new ArrayList<>();
-        given.add("353386062153982|1469175301|CSQ1:87;NSQ1:5;NSQ2:1;CNT1:54;CNT2:54;BAT1:25;PWR1:28|");
-        given.add("353386062153982|1469175401|CSQ1:87;NSQ1:5;NSQ2:1;CNT1:64;CNT2:74;BAT1:25;PWR1:28|");
-        given.add("353386062153982|1469175501|CSQ1:87");
-        Mockito.when(dataBase.getTableData()).thenReturn(given);
-        sensor.setSensorData(dataBase);
-
-        String expected =   "{date=Fri Jul 22 11:15:01 MSK 2016, value=54.0}" + "\n" +
-                "{date=Fri Jul 22 11:16:41 MSK 2016, value=74.0}" + "\n" +
-                "{date=Fri Jul 22 11:18:21 MSK 2016, value=74.0}" + "\n";
-
-        //when
-        List<DataSet> sensordata = sensor.getSensorData();
-        //then
-        String result = "";
-        for (DataSet dataSet : sensordata) {
-            result += dataSet.toString() + "\n";
-        }
-        assertEquals(expected, result);
-    }
-
-    @Test
-    public void test8(){
-        //given
-        Sensor sensor = new Sensor(353386062153982l);
-        List<String> given = new ArrayList<>();
-        given.add("353386062153982|1469175301|CSQ1:87;NSQ1:5;NSQ2:1;CNT1:54;CNT2:54;BAT1:25;PWR1:28|");
-        given.add("353386062153982|1469175401|CSQ1:87");
-        given.add("353386062153982|1469175501|CSQ1:87;NSQ1:5;NSQ2:1;CNT1:54;CNT2:74;BAT1:25;PWR1:28|");
-        Mockito.when(dataBase.getTableData()).thenReturn(given);
-        sensor.setSensorData(dataBase);
-
-        String expected =   "{date=Fri Jul 22 11:15:01 MSK 2016, value=54.0}" + "\n" +
-                "{date=Fri Jul 22 11:16:41 MSK 2016, value=54.0}" + "\n" +
-                "{date=Fri Jul 22 11:18:21 MSK 2016, value=128.0}" + "\n";
-
-        //when
-        List<DataSet> sensordata = sensor.getSensorData();
-        //then
-        String result = "";
-        for (DataSet dataSet : sensordata) {
-            result += dataSet.toString() + "\n";
-        }
-        assertEquals(expected, result);
-    }
-
-    @Test
-    public void test9(){
-        //given
-        Sensor sensor = new Sensor(353386062153982l);
-        List<String> given = new ArrayList<>();
-        given.add("353386062153982|1469175301|CSQ1:87;NSQ1:5;NSQ2:1;CNT1:54;CNT2:54;BAT1:25;PWR1:28|");
-        given.add("353386062153982|1469175401|");
-        given.add("353386062153982|1469175501|CSQ1:87;NSQ1:5;NSQ2:1;CNT1:54;CNT2:5;BAT1:25;PWR1:28|");
-        Mockito.when(dataBase.getTableData()).thenReturn(given);
-        sensor.setSensorData(dataBase);
-
-        String expected =   "{date=Fri Jul 22 11:15:01 MSK 2016, value=54.0}" + "\n" +
-                "{date=Fri Jul 22 11:16:41 MSK 2016, value=54.0}" + "\n" +
-                "{date=Fri Jul 22 11:18:21 MSK 2016, value=59.0}" + "\n";
-
-        //when
-        List<DataSet> sensordata = sensor.getSensorData();
-        //then
-        String result = "";
-        for (DataSet dataSet : sensordata) {
-            result += dataSet.toString() + "\n";
-        }
-        assertEquals(expected, result);
-    }
-
-    @Test
-    public void tes10(){
-        //given
-        Sensor sensor = new Sensor(353386062153982l);
-        List<String> given = new ArrayList<>();
-        given.add("353386062153982|1469175301|");
-        Mockito.when(dataBase.getTableData()).thenReturn(given);
-        sensor.setSensorData(dataBase);
-
-        String expected =   "{date=Fri Jul 22 11:15:01 MSK 2016, value=0.0}" + "\n";
-
-        //when
-        List<DataSet> sensordata = sensor.getSensorData();
-        //then
-        String result = "";
-        for (DataSet dataSet : sensordata) {
-            result += dataSet.toString() + "\n";
-        }
-        assertEquals(expected, result);
-    }
-
-    @Test
-    public void tes11(){
-        //given
-        Sensor sensor = new Sensor(353386062153982l);
-        List<String> given = new ArrayList<>();
-        given.add("353386062153982|1469175301|");
-        given.add("353386062153982|1469175401|");
-        Mockito.when(dataBase.getTableData()).thenReturn(given);
-        sensor.setSensorData(dataBase);
-
-        String expected =   "{date=Fri Jul 22 11:15:01 MSK 2016, value=0.0}" + "\n" +
-                            "{date=Fri Jul 22 11:16:41 MSK 2016, value=0.0}" + "\n";
-
-        //when
-        List<DataSet> sensordata = sensor.getSensorData();
-        //then
-        String result = "";
-        for (DataSet dataSet : sensordata) {
-            result += dataSet.toString() + "\n";
-        }
-        assertEquals(expected, result);
-    }
-
-    @Test
-    public void tes12(){
-        //given
-        Sensor sensor = new Sensor(353386062153982l);
-        List<String> given = new ArrayList<>();
-        given.add("353386062153982|1469175301|");
-        given.add("353386062153982|1469175401|");
+        given.add("353386062153982|1469175101|CSQ1:87;NSQ1:5;NSQ2:1;CNT1:54;CNT2:1000;BAT1:25;PWR1:28|");
+        given.add("353386062153982|1469175201|CSQ1:87;NSQ1:5;NSQ2:1;CNT1:54;CNT2:2000;BAT1:25;PWR1:28|");
+        given.add("353386062153982|1469175301|CSQ1:87;NSQ1:5;NSQ2:1;CNT1:54;CNT2:3000;BAT1:25;PWR1:28|");
+        given.add("353386062153982|1469175401|CSQ1:87;NSQ1:5;NSQ2:1;CNT1:54;CNT2:4000;BAT1:25;PWR1:28|");
         given.add("353386062153982|1469175501|");
-        Mockito.when(dataBase.getTableData()).thenReturn(given);
+        given.add("353386062153982|1469175601|CSQ1:87;NSQ1:5;NSQ2:1;CNT1:54;CNT2:5000;BAT1:25;PWR1:28|");
+        given.add("353386062153982|1469175701|CSQ1:87;NSQ1:5;NSQ2:1;CNT1:54;CNT2:4500;BAT1:25;PWR1:28|");
+        given.add("353386062153982|1469175801|CSQ1:87;NSQ1:5;NSQ2:1;CNT1:54;CNT2:5000;BAT1:25;PWR1:28|");
+
+        Mockito.when(dataBase.getTableData(353386062153982l)).thenReturn(given);
         sensor.setSensorData(dataBase);
 
-        String expected =   "{date=Fri Jul 22 11:15:01 MSK 2016, value=0.0}" + "\n" +
-                            "{date=Fri Jul 22 11:16:41 MSK 2016, value=0.0}" + "\n" +
-                            "{date=Fri Jul 22 11:18:21 MSK 2016, value=0.0}" + "\n";
+        String expected =
+                        "{date=" + new Date(1469175101000l) + ", value=1000.0}" + "\n" +
+                        "{date=" + new Date(1469175201000l) + ", value=2000.0}" + "\n" +
+                        "{date=" + new Date(1469175301000l) + ", value=3000.0}" + "\n" +
+                        "{date=" + new Date(1469175401000l) + ", value=4000.0}" + "\n" +
+                        "{date=" + new Date(1469175501000l) + ", value=4000.0}" + "\n" +
+                        "{date=" + new Date(1469175701000l) + ", value=4500.0}" + "\n" +
+                        "{date=" + new Date(1469175801000l) + ", value=5000.0}" + "\n";
 
         //when
         List<DataSet> sensordata = sensor.getSensorData();
@@ -321,19 +234,33 @@ public class SensorTest  {
     }
 
     @Test
-    public void tes13(){
+    public void test07(){
         //given
         Sensor sensor = new Sensor(353386062153982l);
         List<String> given = new ArrayList<>();
-        given.add("353386062153982|1469175301|");
-        given.add("353386062153982|1469175401|");
-        given.add("353386062153982|1469175501|CSQ1:87;NSQ1:5;NSQ2:1;CNT1:54;CNT2:5;BAT1:25;PWR1:28|");
-        Mockito.when(dataBase.getTableData()).thenReturn(given);
+        given.add("353386062153982|1469175101|CSQ1:87;NSQ1:5;NSQ2:1;CNT1:54;CNT2:47229;BAT1:25;PWR1:28|");
+        given.add("353386062153982|1469175201|CSQ1:87;NSQ1:5;NSQ2:1;CNT1:54;CNT2:47229;BAT1:25;PWR1:28|");
+        given.add("353386062153982|1469175301|CSQ1:87;NSQ1:5;NSQ2:1;CNT1:54;CNT2:47230;BAT1:25;PWR1:28|");
+        given.add("353386062153982|1469175401|CSQ1:87;NSQ1:5;NSQ2:1;CNT1:54;CNT2:47230;BAT1:25;PWR1:28|");
+        given.add("353386062153982|1469175501|CSQ1:87;NSQ1:5;NSQ2:1;CNT1:54;CNT2:47230;BAT1:25;PWR1:28|");
+        given.add("353386062153982|1469175601|CSQ1:87;NSQ1:5;NSQ2:1;CNT1:54;CNT2:47230;BAT1:25;PWR1:28|");
+        given.add("353386062153982|1469175701|");
+        given.add("353386062153982|1469175801|CSQ1:87;NSQ1:5;NSQ2:1;CNT1:54;CNT2:47238;BAT1:25;PWR1:28|");
+        given.add("353386062153982|1469175901|CSQ1:87;NSQ1:5;NSQ2:1;CNT1:54;CNT2:47231;BAT1:25;PWR1:28|");
+
+
+        Mockito.when(dataBase.getTableData(353386062153982l)).thenReturn(given);
         sensor.setSensorData(dataBase);
 
-        String expected =   "{date=Fri Jul 22 11:15:01 MSK 2016, value=0.0}" + "\n" +
-                "{date=Fri Jul 22 11:16:41 MSK 2016, value=0.0}" + "\n" +
-                "{date=Fri Jul 22 11:18:21 MSK 2016, value=5.0}" + "\n";
+        String expected =
+                "{date=" + new Date(1469175101000l) + ", value=47229.0}" + "\n" +
+                        "{date=" + new Date(1469175201000l) + ", value=47229.0}" + "\n" +
+                        "{date=" + new Date(1469175301000l) + ", value=47230.0}" + "\n" +
+                        "{date=" + new Date(1469175401000l) + ", value=47230.0}" + "\n" +
+                        "{date=" + new Date(1469175501000l) + ", value=47230.0}" + "\n" +
+                        "{date=" + new Date(1469175601000l) + ", value=47230.0}" + "\n" +
+                        "{date=" + new Date(1469175701000l) + ", value=47230.0}" + "\n" +
+                        "{date=" + new Date(1469175901000l) + ", value=47231.0}" + "\n";
 
         //when
         List<DataSet> sensordata = sensor.getSensorData();
@@ -344,6 +271,44 @@ public class SensorTest  {
         }
         assertEquals(expected, result);
     }
+
+    @Test
+    public void test08(){
+        //given
+        Sensor sensor = new Sensor(353386062153982l);
+        List<String> given = new ArrayList<>();
+        given.add("353386062153982|1469175101|CSQ1:87;NSQ1:5;NSQ2:1;CNT1:54;CNT2:1000;BAT1:25;PWR1:28|");
+        given.add("353386062153982|1469175201|CSQ1:87;NSQ1:5;NSQ2:1;CNT1:54;CNT2:2000;BAT1:25;PWR1:28|");
+        given.add("353386062153982|1469175301|CSQ1:87;NSQ1:5;NSQ2:1;CNT1:54;CNT2:3000;BAT1:25;PWR1:28|");
+        given.add("353386062153982|1469175401|CSQ1:87;NSQ1:5;NSQ2:1;CNT1:54;CNT2:4000;BAT1:25;PWR1:28|");
+        given.add("353386062153982|1469175501|CSQ1:87;NSQ1:5;NSQ2:1;CNT1:54;CNT2:3000;BAT1:25;PWR1:28|");
+        given.add("353386062153982|1469175601|CSQ1:87;NSQ1:5;NSQ2:1;CNT1:54;CNT2:5000;BAT1:25;PWR1:28|");
+        given.add("353386062153982|1469175701|CSQ1:87;NSQ1:5;NSQ2:1;CNT1:54;CNT2:7000;BAT1:25;PWR1:28|");
+        given.add("353386062153982|1469175801|CSQ1:87;NSQ1:5;NSQ2:1;CNT1:54;CNT2:8000;BAT1:25;PWR1:28|");
+
+        Mockito.when(dataBase.getTableData(353386062153982l)).thenReturn(given);
+        sensor.setSensorData(dataBase);
+
+        String expected =
+                "{date=" + new Date(1469175101000l) + ", value=1000.0}" + "\n" +
+                        "{date=" + new Date(1469175201000l) + ", value=2000.0}" + "\n" +
+                        "{date=" + new Date(1469175301000l) + ", value=3000.0}" + "\n" +
+                        "{date=" + new Date(1469175401000l) + ", value=4000.0}" + "\n" +
+                        "{date=" + new Date(1469175601000l) + ", value=5000.0}" + "\n" +
+                        "{date=" + new Date(1469175701000l) + ", value=7000.0}" + "\n" +
+                        "{date=" + new Date(1469175801000l) + ", value=8000.0}" + "\n";
+
+        //when
+        List<DataSet> sensordata = sensor.getSensorData();
+        //then
+        String result = "";
+        for (DataSet dataSet : sensordata) {
+            result += dataSet.toString() + "\n";
+        }
+        assertEquals(expected, result);
+    }
+
+
 
 
 
